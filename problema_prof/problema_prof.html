@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/load.css">
+<link rel="stylesheet" href="../CSS/pr.css">
+<style>
+    .studenti {
+        width: 200px;
+        margin: 10px;
+        padding: 10px;
+        background-color: rgba(50, 177, 160, 0.5);
+        color: white;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .containter-studenti {
+        padding: 20px;
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+</style>
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+
+    <div class="clasa-mare" id="content-container">
+        <div class="container3">
+            <div class="column-container">
+                <div class="clasa_mea">
+                    <div class="row-container">
+                        <div class="title" id="problema-id"></div>
+                        <div class="title" id="problema-titlu"></div>
+                    </div>
+                    <div class="row-container">
+                        <div class="tag" id="problema-tag"></div>
+                        <div class="tag" id="problema-categorie"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tag" id="problema-enunt"></div>
+            <button id="export-problema" class="submit-button">Exportă Problema</button>
+        </div>
+
+        <div class="container3">
+            <div class="containter-studenti" id="student-container"></div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const overlay = document.getElementById('overlay');
+        const spinner = document.getElementById('loading-spinner');
+        let commentOffset = 0;
+
+        function showContent() {
+            document.getElementById('header').classList.remove('hidden');
+            document.getElementById('content-container').classList.remove('hidden');
+            overlay.style.display = 'none';
+        }
+
+        function fetchHeader() {
+            return fetch('../templates/header.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                })
+                .catch(error => console.error('Eroare la încărcarea header-ului:', error));
+        }
+
+        function fetchAll() {  //afiseaza datele problemei
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = encodeURIComponent(urlParams.get('id'));
+            const clasa = encodeURIComponent(urlParams.get('clasa'));
+            fetch(`problema_prof.php?id=${id}&clasa=${clasa}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                        return;
+                    }
+
+                    document.getElementById('problema-titlu').innerHTML = '<strong>Problemă:</strong> ' + data.problema.titlu;
+                    document.getElementById('problema-tag').innerHTML = '<strong>Tag:</strong> ' + data.problema.tag;
+                    document.getElementById('problema-categorie').innerHTML = '<strong>Categorie:</strong> ' + data.problema.categorie;
+                    document.getElementById('problema-id').innerHTML = '<strong>ID:</strong> ' + data.problema.id;
+                    document.getElementById('problema-enunt').innerHTML = '<strong>Enunț:</strong> ' + data.problema.enunt;
+
+                    const studentContainer = document.getElementById('student-container');
+                    studentContainer.innerHTML = '';  // Clear existing content
+
+                    data.rezolvari.forEach(rezolvare => {
+                        const studentCard = document.createElement('div');
+                        studentCard.className = 'studenti';
+                        studentCard.innerHTML = `
+                            <h3>${rezolvare.nume} ${rezolvare.prenume}</h3>
+                            <a href="rezolvare.html?id=${rezolvare.id_rezolvare}">Rezolvare</a>
+                        `;
+                        studentContainer.appendChild(studentCard);
+                    })
+                    ;
+                })
+                .catch(error => console.error('Eroare la încărcarea datelor:', error));
+        }
+
+        function exportProblem() {
+            const problema = {
+                id: document.getElementById('problema-id').textContent.replace('ID: ', ''),
+                titlu: document.getElementById('problema-titlu').textContent.replace('Problemă: ', ''),
+                tag: document.getElementById('problema-tag').textContent.replace('Tag: ', ''),
+                categorie: document.getElementById('problema-categorie').textContent.replace('Categorie: ', ''),
+                enunt: document.getElementById('problema-enunt').textContent.replace('Enunț: ', '')
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(problema));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "problema_" + problema.id + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        document.getElementById('export-problema').addEventListener('click', exportProblem);
+
+        Promise.all([fetchHeader(), fetchAll()]).then(showContent);
+    });
+</script>
+</body>
+</html>

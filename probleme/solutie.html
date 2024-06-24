@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IN&lt;FORM&gt;ATIX</title>
+    <link rel="stylesheet" href="../CSS/sol.css">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <div class="container-rotativ">
+            <img src="../Images/om_rotativ.png" alt="Skater">
+        </div>
+    </div>
+    <div class="container">
+        <div class="solutie">
+            <h2>Soluția problemei:</h2>
+            <p id="solutie-text"></p>
+        </div>
+    </div>
+    <div class="button-container">
+        <button id="inapoi" class="button">Înapoi</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var backButton = document.getElementById("inapoi");
+            if (backButton) {
+                backButton.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    window.history.back();
+                });
+            }
+
+            const idProblema = new URLSearchParams(window.location.search).get('id_problema');
+            const idProblema2 = new URLSearchParams(window.location.search).get('id_problema2');
+
+            if (idProblema) {
+                fetch('solutie.php?id_problema=' + encodeURIComponent(idProblema))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            document.getElementById('solutie-text').textContent = data.error;
+                        } else {
+                            document.getElementById('solutie-text').textContent = data.solutie;
+                        }
+                    })
+                    .catch(error => console.error('Eroare la încărcarea soluției:', error));
+            } else if (idProblema2) {
+                fetch('solutie.php?id_problema2=' + encodeURIComponent(idProblema2))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            document.getElementById('solutie-text').textContent = data.error;
+                        } else {
+                            document.getElementById('solutie-text').textContent = data.solutie;
+                        }
+                    })
+                    .catch(error => console.error('Eroare la încărcarea soluției:', error));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/home.css">
+</head>
+<body>
+
+<div class="background-overlay"></div>
+
+<div class="container-rotativ">
+    <img src="../Images/om_rotativ.png" alt="Skater">
+</div>
+
+<div class="container">
+    <h1>IN&lt;FORM&gt;ATIX</h1>
+    <p>Bine ați venit!</p>
+
+    <div class="form-container">
+        <h2>Înregistrare</h2>
+        <form action="pagina_fara_cont.php" method="post">
+            <input type="text" id="username" name="username" placeholder="Nume de utilizator" required><br>
+            <input type="password" id="password" name="password" placeholder="Parola" required><br>
+            <input type="text" id="nume" name="nume" placeholder="Nume" required><br>
+            <input type="text" id="prenume" name="prenume" placeholder="Prenume" required><br>
+            <input type="email" id="email" name="email" placeholder="Email"><br>
+            <input type="text" id="telefon" name="telefon" placeholder="Telefon" required pattern="\d{10}"><br>
+            <input type="text" id="tara" name="tara" placeholder="Țara"><br>
+            <input type="text" id="oras" name="oras" placeholder="Oraș"><br>
+            <input type="text" id="liceu" name="liceu" placeholder="Liceu"><br>
+            <input type="number" id="clasa" name="clasa" placeholder="Clasa"  min="9" max="12"><br>
+            <select id="tip_utilizator" name="tip_utilizator">
+                <option value="profesor">profesor</option>
+                <option value="elev">elev</option>
+            </select><br>
+            <input type="submit" value="Înregistrare">
+        </form>
+    </div> 
+    <div class="options">
+        <p><a href="../home.html">Înapoi Acasă</a></p>
+    </div>
+    <div id="error-message"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('error')) {
+        const errorDiv = document.getElementById('error-message');
+        errorDiv.textContent = params.get('error');
+        errorDiv.classList.add('error-box');
+    }
+});
+
+</script>
+
+</body>
+</html>

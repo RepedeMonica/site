@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/load.css">
+<link rel="stylesheet" href="../CSS/pr.css">
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+
+    <div class="clasa-mare" id="content-container">
+
+        <div class="container3">
+            <div class="column-container">
+                <div class="clasa_mea">
+                    <div class="row-container">
+                        <div class="title" id="problema-id"></div>
+                        <div class="title" id="problema-titlu"></div>
+                    </div>
+
+                    <div class="row-container">
+                        <div class="tag" id="problema-tag"></div>
+                        <div class="tag" id="problema-categorie"></div>
+                    </div>
+                </div>
+
+                <div class="clasa_mea">
+                    <div id="notare-container" class="clasa_mea"></div>
+                </div>
+                <div class="clasa_mea"></div>
+            </div>
+            <div class="tag" id="problema-enunt"></div>
+            <button id="export-problema" class="submit-button">Exportă Problema</button>
+            <button id="view-solution-link" class="submit-button">Vezi soluție</button><br>
+            <button id="view-solution-link2" class="submit-button">Vezi soluție notată</button><br>
+        </div>
+
+        <div class="container3">
+            <div id="grading-section"></div> 
+            <div class="solution_load">
+                <form id="text-upload-form">
+                    <label for="text_solutie"><br>Scrie soluția aici:</label><br>
+                    <textarea name="text_solutie" id="text_solutie" required></textarea><br>
+                    <input type="submit" value="Trimite soluția" class="submit-button">
+                </form>
+                
+                <form id="file-upload-form" enctype="multipart/form-data">
+                    <input type="hidden" name="id_problema" id="id_problema">
+                    <input type="file" name="solutie_file" id="solutie_file" accept=".txt">
+                    <input type="submit" value="Încarcă soluția" class="submit-button">
+                </form>
+            </div>
+
+            <div class="grading-section">
+                <div class="title">Statistici:</div>
+                <div class="note" id="total-elevi"></div>
+                <div class="note" id="total-corect"></div>
+                <div class="note" id="media-note"></div>   
+                <div class="note" id="media-rating"></div>   
+            </div>
+
+            <div class="rating-section">
+                <form id="rating-form">
+                    <label for="rating" class="heading"><br>Acordă un rating problemei<br></label>
+                    <input type="number" class="rating" id="rating" name="rating" min="1" max="5" required>
+                    <input type="submit" value="Trimite rating" class="submit-button">
+                </form>
+                <div id="current-rating"></div>
+            </div>
+
+            <div class="comments-section">
+                <div class="title">Comentarii:</div>
+                <div id="comentarii-list" class="comment-widgets m-b-20"></div>
+                <button id="load-more-comments" class="submit-button">Încarcă mai multe comentarii</button>
+            </div>
+
+            <form id="comments-section">
+                <label for="text_comentariu"><br>Scrie și tu comentarii sau sfaturi:<br></label>
+                <textarea name="text_comentariu" id="text_comentariu" placeholder="Adaugă un comentariu sau sfat" required></textarea><br>
+                <input type="submit" value="Trimite comentariu" class="submit-button">
+            </form>
+        </div>
+
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const overlay = document.getElementById('overlay');
+        const spinner = document.getElementById('loading-spinner');
+        let commentOffset = 0;
+        const urlParams = new URLSearchParams(window.location.search);
+        const idProblema = urlParams.get('id');
+        document.getElementById('id_problema').value = idProblema;
+
+        function showContent() {
+            document.getElementById('header').classList.remove('hidden');
+            document.getElementById('content-container').classList.remove('hidden');
+            overlay.style.display = 'none';
+        }
+
+        function fetchHeader() {
+            return fetch('../templates/header.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                })
+                .catch(error => console.error('Eroare la încărcarea header-ului:', error));
+        } 
+
+        function fetchAll() {  //afiseaza datele problemei
+            fetch('problema.php?id=' + encodeURIComponent(new URLSearchParams(window.location.search).get('id')))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                        return;
+                    }
+
+                    document.getElementById('problema-titlu').innerHTML = '<strong>Problemă:</strong> ' + data.problema.titlu;
+                    document.getElementById('problema-tag').innerHTML = '<strong>Tag:</strong> ' + data.problema.tag;
+                    document.getElementById('problema-categorie').innerHTML = '<strong>Categorie:</strong> ' + data.problema.categorie;
+                    document.getElementById('problema-id').innerHTML = '<strong>ID:</strong> ' + data.problema.id;
+                    document.getElementById('problema-enunt').innerHTML = '<strong>Enunț:</strong> ' + data.problema.enunt;
+
+                    if (data.tip_utilizator !== 'profesor') {
+                        fetchNota(idProblema);
+                        fetchObservatie(idProblema);
+                    } else {
+                        document.getElementById('grading-section').style.display = 'none';
+                    }
+
+                    fetchStatistici(idProblema);
+
+                    document.getElementById('view-solution-link').addEventListener('click', function() {
+                        window.location.href = 'solutie.html?id_problema=' + data.problema.id;
+                    });
+
+                    loadComments();
+                    fetchRating(data.problema.id);
+                })
+                .catch(error => console.error('Eroare la încărcarea datelor:', error));
+        }
+
+        function fetchStatistici(idProblema) {
+            fetch(`statistici.php?id_problema=${idProblema}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                        return;
+                    }
+
+                    document.getElementById('total-elevi').innerHTML = `Câți elevi au încărcat problema: ${data.total_elevi}`;
+                    document.getElementById('total-corect').innerHTML = `Câți elevi au rezolvat-o corect: ${data.total_corect}`;
+                    document.getElementById('media-note').innerHTML = `Media notelor: ${data.media_note}`;
+                    document.getElementById('media-rating').innerHTML = `Media ratingurilor: ${data.media_rating}`;
+                })
+                .catch(error => console.error('Eroare la încărcarea statisticilor:', error));
+        }
+
+        function fetchNota(idProblema) {
+            fetch(`nota.php?id_solutie=${idProblema}`)
+                .then(response => response.json())
+                .then(data => {
+                    const notareContainer = document.getElementById('notare-container');
+                    if (data.nota) {
+                        notareContainer.innerHTML = `
+                            <div class="title">Notare:</div>
+                            <div class="note">Notă: ${data.nota}</div>
+                            <div class="note">Data: ${data.data}</div>
+                        `;
+                        document.getElementById('view-solution-link2').addEventListener('click', function() {
+                    window.location.href = `solutie.html?id_problema2=${data.id}`;
+                });
+                    } 
+                })
+                .catch(error => console.error('Eroare la încărcarea notei:', error));
+        }
+
+        function fetchObservatie(idProblema) {
+            fetch(`observatie.php?id_solutie=${idProblema}`)
+                .then(response => response.json())
+                .then(data => {
+                    const notareContainer = document.getElementById('grading-section');
+                    if (data.observatie) {
+                        notareContainer.innerHTML = `
+                            <div class="title">Observații:</div>
+                            <div class="note">Observație: ${data.observatie}</div>
+                            <div class="note">Data: ${data.data}</div>
+                        `;
+                    }
+                })
+                .catch(error => console.error('Eroare la încărcarea notei:', error));
+        }
+
+        function submitTextSolution(event) {//trimite solutie scrisa
+            event.preventDefault();
+            const textSolution = document.getElementById('text_solutie').value;
+            const idProblema = new URLSearchParams(window.location.search).get('id');
+
+            fetch('submit_solution.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_problema: idProblema,
+                    text_solutie: textSolution
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Soluția a fost trimisă cu succes.');
+                    location.reload();
+                } else {
+                    console.error('Eroare la trimiterea soluției:', data.error);
+                }
+            })
+            .catch(error => console.error('Eroare la trimiterea soluției:', error));
+        }
+
+        function submitComment(event) {//trimite comentariul scris
+            event.preventDefault();
+            const textSolution = document.getElementById('text_comentariu').value;
+            const idProblema = new URLSearchParams(window.location.search).get('id');
+
+            fetch('submit_comment.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_problema: idProblema,
+                    text_comentariu: textSolution
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Comentariul a fost trimis cu succes.');
+                    location.reload();
+                } else {
+                    console.error('Eroare la trimiterea comentariului:', data.error);
+                }
+            })
+            .catch(error => console.error('Eroare la trimiterea comentariului:', error));
+        }
+
+        function loadComments() {
+            const idProblema = new URLSearchParams(window.location.search).get('id');
+            fetch(`fetch_comments.php?id_problema=${idProblema}&offset=${commentOffset}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const comentariiList = document.getElementById('comentarii-list');
+                        data.comentarii.forEach(comentariu => {
+                            const commentElement = document.createElement('div');
+                            commentElement.className = 'comentariu';
+                            commentElement.textContent = "#" + comentariu.id + ": " + comentariu.comentariu;
+                            comentariiList.appendChild(commentElement);
+                        });
+                        commentOffset += 3; 
+                    } else {
+                        console.error('Eroare la încărcarea comentariilor:', data.error);
+                    }
+                })
+                .catch(error => console.error('Eroare la încărcarea comentariilor:', error));
+        }
+
+        function fetchRating(idProblema) {
+            fetch(`rating.php?id_problema=${idProblema}`)
+                .then(response => response.json())
+                .then(data => {
+                    const ratingDisplay = document.getElementById('current-rating');
+                    if (data.rating) {
+                        ratingDisplay.textContent = `Ratingul tău: ${data.rating}/5`;
+                    } else {
+                        ratingDisplay.textContent = "Nu ai acordat încă un rating.";
+                    }
+                })
+                .catch(error => console.error('Eroare la încărcarea ratingului:', error));
+        }
+
+        function submitRating(event) {
+            event.preventDefault();
+            const rating = document.getElementById('rating').value;
+            const idProblema = new URLSearchParams(window.location.search).get('id');
+
+            fetch('rating.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_problema: idProblema,
+                    rating: rating
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Ratingul a fost trimis cu succes.');
+                    fetchRating(idProblema); // Update the displayed rating
+                } else {
+                    console.error('Eroare la trimiterea ratingului:', data.error);
+                }
+            })
+            .catch(error => console.error('Eroare la trimiterea ratingului:', error));
+        }
+
+        function exportProblem() {
+            const problema = {
+                id: document.getElementById('problema-id').textContent.replace('ID: ', ''),
+                titlu: document.getElementById('problema-titlu').textContent.replace('Problemă: ', ''),
+                tag: document.getElementById('problema-tag').textContent.replace('Tag: ', ''),
+                categorie: document.getElementById('problema-categorie').textContent.replace('Categorie: ', ''),
+                enunt: document.getElementById('problema-enunt').textContent.replace('Enunț: ', '')
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(problema));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "problema_" + problema.id + ".json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        document.getElementById('text-upload-form').addEventListener('submit', submitTextSolution);
+        document.getElementById('comments-section').addEventListener('submit', submitComment);
+        document.getElementById('rating-form').addEventListener('submit', submitRating);
+        document.getElementById('load-more-comments').addEventListener('click', loadComments);
+        document.getElementById('export-problema').addEventListener('click', exportProblem);
+        
+        document.getElementById('file-upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('upload_solution.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Upload successful:', data);
+                location.reload();  
+            })
+            .catch(error => console.error('Error uploading solution:', error));
+        });
+
+        Promise.all([fetchHeader(), fetchAll()]).then(showContent);
+
+    });
+
+</script>
+</body>
+</html>

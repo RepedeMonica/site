@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/load.css">
+<link rel="stylesheet" href="../CSS/materiale.css">
+</head>
+<body>
+
+
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+    
+    <div class="contentMateriale" id="content-container">
+    <h1>Introducere în Backtracking</h1>
+        <p>Backtracking-ul este o tehnică algoritmică utilizată în rezolvarea problemelor de decizie, optimizare și generare a combinațiilor sau permutărilor. Este adesea folosit în problemele de căutare și explorare a spațiului soluțiilor, în special atunci când este necesar să se exploreze toate posibilitățile pentru a găsi o soluție viabilă.</p>
+
+        <h2>Cum Funcționează Backtracking-ul?</h2>
+        
+        <p>Principiul fundamental al backtracking-ului este de a explora recursiv toate posibilitățile unei probleme și de a renunța la explorarea unor ramuri care nu duc la o soluție validă. Acest lucru se realizează printr-o combinație de căutare în adâncime și tehnici de eliminare a ramurilor inutile.</p>
+        
+        <h2>Etapele Procesului de Backtracking:</h2>
+        
+        <ol>
+          <li><strong>Alegerea unei soluții parțiale:</strong> Se face alegerea unei soluții parțiale pentru problema dată.</li>
+          <li><strong>Verificarea soluției parțiale:</strong> Se verifică dacă soluția parțială îndeplinește condițiile de validitate și, dacă da, se continuă explorarea.</li>
+          <li><strong>Extinderea soluției parțiale:</strong> Se extinde soluția parțială prin adăugarea unui element nou.</li>
+          <li><strong>Aplicarea recursivă:</strong> Se aplică recursiv backtracking-ul pentru a explora toate posibilitățile extinderii soluției parțiale.</li>
+          <li><strong>Renunțarea la soluții invalide:</strong> Dacă o soluție parțială nu îndeplinește condițiile de validitate sau nu poate fi extinsă într-o soluție validă, se renunță la acea ramură și se revine la pasul anterior.</li>
+          <li><strong>Identificare soluțiilor valide:</strong> Se identifică și se raportează soluțiile valide găsite în timpul procesului de explorare.</li>
+        </ol>
+        
+        <h2>Exemple de Probleme Rezolvate cu Backtracking:</h2>
+        
+        <ul>
+          <li><strong>Problema reginelor:</strong> Plasarea unui număr dat de regine pe o tablă de șah astfel încât să nu existe două regine care să se amenințe reciproc.</li>
+          <li><strong>Generarea combinațiilor și permutărilor:</strong> Generarea tuturor combinațiilor sau permutărilor unui set de elemente.</li>
+          <li><strong>Problema Sudoku:</strong> Completați o tablă de Sudoku astfel încât fiecare rând, fiecare coloană și fiecare pătrat de 3x3 să conțină toate cifrele de la 1 la 9, fără a se repeta.</li>
+        </ul>
+        
+        <h2>Concluzie</h2>
+        
+        <p>Backtracking-ul este o tehnică puternică și versatilă folosită în rezolvarea unei game variate de probleme combinatoriale și de decizie. Deși poate fi o metodă intensă în ceea ce privește consumul de resurse, atunci când este aplicată corect și eficient, poate fi extrem de utilă în găsirea soluțiilor pentru problemele complexe.</p>           
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

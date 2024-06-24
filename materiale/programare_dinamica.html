@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/load.css">
+<link rel="stylesheet" href="../CSS/materiale.css">
+</head>
+<body>
+
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+    
+    <div class="contentMateriale" id="content-container">
+        <h1>Introducere în Programare Dinamica</h1>
+       
+        <p>Programarea dinamică este o tehnică algoritmică utilizată în rezolvarea problemelor de optimizare, în special în cazul problemelor de decizie. Este folosită pentru a rezolva probleme care pot fi împărțite în subprobleme mai mici, iar soluția optimă globală poate fi obținută din soluțiile subproblemelelor.</p>
+        
+        <h2>Cum Funcționează Programarea Dinamică?</h2>
+        
+        <p>Principiul fundamental al programării dinamice constă în stocarea și reutilizarea soluțiilor subproblemelelor deja rezolvate pentru a evita recalcularea lor. Acest lucru se realizează de obicei prin stocarea soluțiilor subproblemelelor pentru a fi utilizate ulterior în rezolvarea altor subprobleme.</p>
+        
+        <h2>Etapele Procesului de Programare Dinamică:</h2>
+        
+        <ol>
+          <li><strong>Identificarea subproblemelelor:</strong> Se identifică subproblemele care compun problema globală și se definește modul în care acestea sunt interconectate.</li>
+          <li><strong>Definirea soluțiilor subproblemelelor:</strong> Se definește cum se rezolvă fiecare subproblemă și se determină metoda de stocare a soluțiilor acestora pentru a fi utilizate ulterior.</li>
+          <li><strong>Calculul soluțiilor subproblemelelor:</strong> Se calculează soluțiile pentru fiecare subproblemă în mod iterativ sau recursiv, folosindu-se de soluțiile găsite anterior.</li>
+          <li><strong>Reconstruirea soluției globale:</strong> Se reconstruiește soluția globală folosind soluțiile subproblemelelor deja calculate.</li>
+        </ol>
+        
+        <h2>Exemple de Probleme Rezolvate cu Programare Dinamică:</h2>
+        
+        <ul>
+          <li><strong>Problema rucsacului:</strong> Determinarea celei mai bune modalități de a umple un rucsac cu bunuri cu anumite valori și greutăți, maximizând valoarea totală a bunurilor și respectând capacitatea maximă a rucsacului.</li>
+          <li><strong>Calcularea celui de-al n-lea număr Fibonacci:</strong> Determinarea celui de-al n-lea număr Fibonacci folosind programarea dinamică pentru a evita recalcularea valorilor deja calculate.</li>
+          <li><strong>Problema drumului cel mai scurt:</strong> Găsirea celui mai scurt drum între două puncte într-un graf ponderat, minimizând costul total al deplasării.</li>
+        </ul>
+        
+        <h2>Concluzie</h2>
+        
+        <p>Programarea dinamică este o tehnică eficientă și puternică pentru rezolvarea problemelor de optimizare, în special atunci când problema poate fi împărțită în subprobleme mai mici și soluția optimă globală poate fi obținută din soluțiile subproblemelelor. Prin stocarea și reutilizarea soluțiilor subproblemelelor, programarea dinamică poate reduce semnificativ timpul de calcul și poate genera soluții optime pentru probleme complexe.</p>
+         
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

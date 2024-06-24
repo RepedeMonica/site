@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/load.css">
+<link rel="stylesheet" href="../CSS/rezolvare.css">
+</head>
+
+<body>
+
+<div class="background-overlay"></div>
+
+<div class="container">
+    
+    <div class="container-rotativ">
+        <img src="../Images/om_rotativ.png" alt="Skater">
+    </div>
+
+    <div class="myclass">
+        <form id="grade-form">
+            <label for="nota" class="heading"><br>Acordă o notă soluției<br></label>
+            <div class="nota">
+                <input type="number" class="nota" id="nota" name="nota" min="1" max="10" required>
+                <input type="submit" value="Trimite" class="submit-button">
+            </div>
+        </form>
+        <div id="current-grade"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="soluție">
+        <h2>Soluția problemei:</h2>
+        <p id="solutie-text"></p>
+    </div>
+</div>
+
+<form id="observatii-form">
+<div class="comentarii">
+    <div class="comentarii-section">
+        <h2>Observatii</h2>
+        <textarea class="textarea-comment" id="observatie"  placeholder="Adaugă o observație"></textarea>
+        <button type="submit" class="button">Confirmare</button>
+    </div>
+</div>
+</form>
+
+<div class="button-container">
+    <button id="inapoi" class="button">Înapoi</button>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var backButton = document.getElementById("inapoi");
+        if (backButton) {
+            backButton.addEventListener("click", function(event) {
+                event.preventDefault();
+                window.history.back();
+            });
+        }
+
+        const idPropus = new URLSearchParams(window.location.search).get('id_propus');
+        if(idPropus)
+        {
+            fetch('rezolvare.php?idPropus=' + new URLSearchParams(window.location.search).get('id_propus'))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('solutie-text').textContent = data.error;
+                    } else {
+                        document.getElementById('solutie-text').textContent = data.solutie;
+                    }
+
+                    if(idPropus) fetchNota(idPropus,'propus');
+                    else
+                    fetchNota(new URLSearchParams(window.location.search).get('id'),'exista');
+                })
+                .catch(error => console.error('Eroare la încărcarea soluției:', error));
+     
+        }
+        else
+        {
+        fetch('rezolvare.php?id=' + new URLSearchParams(window.location.search).get('id'))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById('solutie-text').textContent = data.error;
+                    } else {
+                        document.getElementById('solutie-text').textContent = data.solutie;
+                    }
+
+                    if(idPropus) fetchNota(idPropus,'propus');
+                    else
+                    fetchNota(new URLSearchParams(window.location.search).get('id'),'exista');
+                })
+                .catch(error => console.error('Eroare la încărcarea soluției:', error));
+            }
+     
+            function fetchNota(idSolutie,prop) {
+                if(prop=='propus'){
+                    fetch(`nota.php?id_propus=${idSolutie}`)
+                .then(response => response.json())
+                .then(data => {
+                    const ratingDisplay = document.getElementById('current-grade');
+                    if (data.rating) {
+                        ratingDisplay.textContent = `Nota ta: ${data.rating}/10`;
+                    } else {
+                        ratingDisplay.textContent = "Nu ai acordat încă o notă.";
+                    }
+                })
+                .catch(error => console.error('Eroare la încărcarea notei:', error));
+                }
+                else{
+            fetch(`nota.php?id_solutie=${idSolutie}`)
+                .then(response => response.json())
+                .then(data => {
+                    const ratingDisplay = document.getElementById('current-grade');
+                    if (data.rating) {
+                        ratingDisplay.textContent = `Nota ta: ${data.rating}/10`;
+                    } else {
+                        ratingDisplay.textContent = "Nu ai acordat încă o notă.";
+                    }
+                })
+                .catch(error => console.error('Eroare la încărcarea notei:', error));
+            }
+        }
+        
+        function submitNota(event) {
+            event.preventDefault();
+            const nota = document.getElementById('nota').value;
+            const idSolutie = new URLSearchParams(window.location.search).get('id');
+
+            if(idPropus){
+                fetch('nota.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_propus: idPropus,
+                    nota: nota
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Nota a fost trimis cu succes.');
+                    fetchNota(idSolutie); // Update the displayed rating
+                } else {
+                    console.error('Eroare la trimiterea notei:', data.error);
+                }
+            })
+            .catch(error => console.error('Eroare la trimiterea ratingului:', error));
+        }
+
+            else{
+            fetch('nota.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id_solutie: idSolutie,
+                    nota: nota
+
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Nota a fost trimis cu succes.');
+                    fetchNota(idSolutie); // Update the displayed rating
+                } else {
+                    console.error('Eroare la trimiterea notei:', data.error);
+                }
+            })
+            .catch(error => console.error('Eroare la trimiterea ratingului:', error));
+        }
+
+        }
+
+        document.getElementById('grade-form').addEventListener('submit', submitNota);
+        document.getElementById('observatii-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const observatie = document.getElementById('observatie').value;
+        const idSolutie = new URLSearchParams(window.location.search).get('id');
+
+        if(idPropus){
+
+            fetch('submit_observatie.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_propus: idPropus,
+                enunt: observatie
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Observația a fost trimisă cu succes.');
+                location.reload(); 
+            } else {
+                console.error('Eroare la trimiterea observației:', data.error);
+            }
+        })
+        .catch(error => console.error('Eroare la trimiterea observației:', error));
+
+        }
+        else{
+        fetch('submit_observatie.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id_solutie: idSolutie,
+                enunt: observatie
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Observația a fost trimisă cu succes.');
+                location.reload(); 
+            } else {
+                console.error('Eroare la trimiterea observației:', data.error);
+            }
+        })
+        .catch(error => console.error('Eroare la trimiterea observației:', error));
+    }
+        
+    });
+    });
+</script>
+
+
+</body>
+</html>
