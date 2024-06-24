@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/creeaza_clas.css">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <div class="container-rotativ">
+            <img src="../Images/om_rotativ.png" alt="Skater">
+        </div>
+
+        <form id="problema-form">
+            <div class="centrare">
+                <h2>Propune o problemă nouă</h2>
+            </div>
+
+            <div class="form-group">
+                <label for="nume_problema">Numele Problemei</label>
+                <input type="text" id="nume_problema" name="nume_problema" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cerinta">Cerința</label>
+                <textarea id="cerinta" name="cerinta" rows="6" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="taguri">Tag-uri problemă (separate prin virgulă)</label>
+                <input type="text" id="taguri" name="taguri" readonly required>
+                
+                <div id="taguri-select-container"> </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="tag">Dificultate Problemă</label>
+                <select id="tag" name="tag">
+                    <option value="usoara">usoara</option>
+                    <option value="medie">medie</option>
+                    <option value="grea">grea</option>
+                </select>
+            </div>
+
+            <div class="centrare">
+                <button type="button" class="button" onclick="window.location.href='../baraNavigare/clase_prof.html'">Înapoi</button>
+                <button type="submit" class="button" onclick="window.location.href='../baraNavigare/clase_prof.html'">Trimite</button>
+            </div>
+            <div class="centrare">
+                <label for="import-problema"><br>Importă Problema</label>
+                <input type="file" id="import-problema" accept=".json">
+            </div>
+        </form>
+
+        <div class="reguli">
+            <h3>Reguli de bază pentru încărcarea unei probleme:</h3>
+            <ul>
+                <li>Regula 1: Exprimă-te clar și într-un limbaj cât mai generic.</li>
+                <li>Regula 2: Încearcă să nu combini capitole (în special cele mai dificile).</li>
+                <li>Regula 3: Ai grijă cum alegi tag-urile.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const taguriSelectContainer = document.getElementById('taguri-select-container');
+        const taguriInput = document.getElementById('taguri');
+        const validCategories = new Set(); 
+
+        function loadCategories() {
+            fetch('fetch_categories.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                        return;
+                    }
+
+                    data.forEach(category => {
+                        validCategories.add(category.categorie);
+                        const button = document.createElement('button');
+                        button.type = 'button';
+                        button.textContent = category.categorie;
+                        button.setAttribute('data-tag', category.categorie);
+                        button.addEventListener('click', handleCategoryClick);
+                        taguriSelectContainer.appendChild(button);
+                    });
+                })
+                .catch(error => console.error('Error loading categories:', error));
+        }
+
+        function handleCategoryClick() {
+            const tag = this.getAttribute('data-tag');
+            let currentTags = taguriInput.value.split(',').map(tag => tag.trim()).filter(tag => tag);
+
+            if (currentTags.includes(tag)) {
+                currentTags = currentTags.filter(t => t !== tag);
+                this.classList.remove('selected');
+            } else {
+                currentTags.push(tag);
+                this.classList.add('selected');
+            }
+
+            taguriInput.value = currentTags.join(', ');
+        }
+
+        document.getElementById('problema-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch('script_propune_problema.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                   // alert('Problema a fost propusă cu succes!');
+                    // Nu resetăm formularul pentru a păstra datele
+                } else {
+                   // alert('A apărut o eroare, reîncercați: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                //alert('A apărut o eroare.');
+            });
+        });
+
+        document.getElementById('import-problema').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    try {
+                        const problema = JSON.parse(content);
+                        document.getElementById('nume_problema').value = problema.titlu || '';
+                        document.getElementById('cerinta').value = problema.enunt || '';
+                        
+                        const importedCategories = problema.categorie ? problema.categorie.split(',').map(cat => cat.trim()) : [];
+                        const validImportedCategories = importedCategories.filter(cat => validCategories.has(cat));
+                        document.getElementById('taguri').value = validImportedCategories.join(', ');
+
+                        if (["usoara", "medie", "grea"].includes(problema.tag)) {
+                            document.getElementById('tag').value = problema.tag;
+                        } else {
+                            document.getElementById('tag').value = 'usoara';
+                        }
+                    } catch (error) {
+                        alert('A apărut o eroare la importarea problemei: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        loadCategories();
+    });
+    </script>
+</body>
+</html>

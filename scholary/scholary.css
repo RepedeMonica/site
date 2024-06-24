@@ -1,0 +1,109 @@
+body {
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 5px 0;
+}
+
+.unu, .iarpoze {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.unu > div, .iarpoze > div {
+    margin: 10px;
+    max-width: 45%;
+}
+
+figure {
+    margin: 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 70%;
+    height: auto;
+}
+
+figcaption {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+    .unu, .iarpoze {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .unu > div, .iarpoze > div {
+        flex: 1 1 100%;
+    }
+}
+
+section h2, section h3, section h4 {
+    margin-top: 0;
+}
+
+footer {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#image, #image1, #image2, #image5, #image6, #image7, #imageProblema {
+    display: flex;
+    justify-content: center;
+}
+
+#image img, #image1 img, #image2 img, #image5 img, #image6 img, #image7 img {
+    width: 70%;
+    max-width: 700px;
+}
+
+#imageBara img {
+    width: 100%;
+}
+
+#imageProblema {
+    display: flex;
+}
+
+.acasa, #deconectare, #probleme, #materiale, #profil, #admin, #motivatii, #Features, #Requirements, #Arhitecture, #acks {
+    margin-top: 40px;
+}
+
+.doi .poze {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.doi .poze .iarpoze {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.doi .poze .iarpoze > div {
+    margin: 10px 0;
+    max-width: 100%;
+}
+
+.doi .poze .iarpoze figure img {
+    max-width: 100%;
+    height: auto;
+}

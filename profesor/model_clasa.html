@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/clazz_model.css">
+<style>
+    li a {
+    color: #3498db;
+    transition: color 0.3s ease;
+    padding:2px;
+    text-decoration: none;
+    list-style-type: none;
+}
+li{
+    list-style-type: none;
+}
+
+li a:hover {
+    color: #094b76;
+    text-decoration: none;
+}
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+    <div class="container">
+            <h2>Clasa <span id="nume-clasa"></span></h2>
+            <p><strong>Profil:</strong> <span id="profil-clasa"></span></p>
+            <div class="teme-container">
+                <div class="teme-column">
+                    <button class="chenar-button teme-active-title">Teme in desfasurare</button>
+                    <div class="teme-active" style="display: none;"></div>
+                </div>
+                <div class="teme-column">
+                    <button class="chenar-button teme-terminate-title">Teme Terminate</button>
+                                        <div class="teme-terminate" style="display: none;"></div>
+                </div>
+            </div>
+            <div class="students-container">
+                <button class="chenar-button afiseaza-studenti">Studenții Clasei</button>
+                <ul class="category-list" id="category-list"></ul>
+            </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const numeClasa = new URLSearchParams(window.location.search).get('nume_clasa');
+            const profilClasa = new URLSearchParams(window.location.search).get('profil');
+
+            document.getElementById('nume-clasa').textContent = numeClasa;
+            document.getElementById('profil-clasa').textContent = profilClasa;
+
+            fetch('../templates/header.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                })
+                .catch(error => console.error('Eroare la încărcarea header-ului:', error));
+
+            function fetchTeme(type) {
+                const container = document.querySelector(type === 'active' ? '.teme-active' : '.teme-terminate');
+                if (container.style.display === 'block') {
+                    container.style.display = 'none';
+                    return;
+                }
+
+                fetch(`model_clasa.php?action=fetch_teme&nume_clasa=${encodeURIComponent(numeClasa)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error);
+                        }
+
+                        container.innerHTML = '';
+                        const teme = type === 'active' ? data.active : data.terminate;
+
+                        if (teme.length > 0) {
+                            let temaIndex = 1;
+                            teme.forEach(function(tema) {
+                                const temaElement = document.createElement('li');
+                                temaElement.classList.add('tema-item');
+                                temaElement.innerHTML = `
+                                    <button class="chenar-button afiseaza-probleme" data-id_tema="${tema.id}">Tema ${temaIndex}</button></p>
+                                    <ul class="probleme-container" id="probleme-${tema.id}" style="display:none;"></ul>`;
+                                container.appendChild(temaElement);
+                                temaIndex++;
+                            });
+
+                            document.querySelectorAll('.afiseaza-probleme').forEach(button => {
+                                button.addEventListener('click', function () {
+                                    const id_tema = this.getAttribute('data-id_tema');
+                                    const problemeContainer = document.getElementById(`probleme-${id_tema}`);
+
+    if (problemeContainer.style.display === 'none' || problemeContainer.innerHTML === '') {
+    fetch(`model_clasa.php?action=fetch_probleme_tema&id_tema=${id_tema}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            const problemaExista = data.exista;
+            const problemaPropus = data.propus;
+
+            problemeContainer.style.display = 'block';
+            problemeContainer.innerHTML = '<h4 style="display: none;">Problemele Temei</h4>';
+
+            if (problemaExista.length > 0) {
+                problemaExista.forEach(problema => {
+                    const problemaElement = document.createElement('li');
+                    problemaElement.innerHTML = `<a href="../problema_prof/problema_prof.html?id=${encodeURIComponent(problema.id)}&clasa=${numeClasa}">${problema.titlu}</a>`;
+                    problemeContainer.appendChild(problemaElement);
+                });
+            } //else {problemeContainer.innerHTML += '<p>Nu există probleme pentru această temă.</p>';}
+
+            if (problemaPropus.length > 0) {
+                problemaPropus.forEach(problema => {
+                    const problemaElement = document.createElement('li');
+                    problemaElement.innerHTML = `<a href="../problema_prof/problema_propusa.html?clasa=${numeClasa}&id=${problema.id}">${problema.nume_problema}</a>`;
+                    problemeContainer.appendChild(problemaElement);
+                });
+            } //else {problemeContainer.innerHTML += '<p>Nu există probleme propuse pentru această temă.</p>';}
+        })
+        .catch(error => {
+            console.error('Eroare:', error);
+            problemeContainer.innerHTML = '<p>A intervenit o eroare. Vă rugăm să reîncercați mai târziu.</p>';
+        });
+} else {
+    problemeContainer.style.display = 'none';
+}
+
+                                });
+                            });
+
+                            container.style.display = 'block';
+                        } else {
+                            const noTemeElement = document.createElement('li');
+                            noTemeElement.textContent = type === 'active' ? 'Nu există teme active.' : 'Nu există teme terminate.';
+                            container.appendChild(noTemeElement);
+                            container.style.display = 'block';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Eroare:', error);
+                        container.innerHTML = '<li>A intervenit o eroare. Vă rugăm să reîncercați mai târziu.</li>';
+                        container.style.display = 'block';
+                    });
+            }
+
+            // Eveniment pentru afișarea temelor active
+            document.querySelector('.teme-active-title').addEventListener('click', function() {
+                fetchTeme('active');
+            });
+
+            // Eveniment pentru afișarea temelor terminate
+            document.querySelector('.teme-terminate-title').addEventListener('click', function() {
+                fetchTeme('terminate');
+            });
+
+            // Eveniment pentru afișarea listei de studenți
+            document.querySelector('.afiseaza-studenti').addEventListener('click', function() {
+                const studentsContainer = document.getElementById('category-list');
+                if (studentsContainer.style.display === 'block') {
+                    studentsContainer.style.display = 'none';
+                    return;
+                }
+
+                if (studentsContainer.innerHTML === '') {
+                    fetch(`model_clasa.php?action=fetch_students&nume_clasa=${encodeURIComponent(numeClasa)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            studentsContainer.innerHTML = '';
+                            if (data.length > 0) {
+                                data.forEach(function(student) {
+                                    const studentElement = document.createElement('li');
+                                    studentElement.textContent = `${student.nume} ${student.prenume}`;
+                                    studentsContainer.appendChild(studentElement);
+                                });
+                                studentsContainer.style.display = 'block';
+                            } else {
+                                studentsContainer.innerHTML = '<p>Nu există studenți în această clasă.</p>';
+                                studentsContainer.style.display = 'block';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Eroare:', error);
+                            studentsContainer.innerHTML = '<p>A intervenit o eroare. Vă rugăm să reîncercați mai târziu.</p>';
+                            studentsContainer.style.display = 'block';
+                        });
+                } else {
+                    studentsContainer.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

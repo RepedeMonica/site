@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IN&lt;FORM&gt;ATIX</title>
+    <link rel="stylesheet" href="scholary.css">
+</head>
+<body>
+    <article resource="#" typeof="schema:ScholarlyArticle">
+        <header>
+          <h1 property="schema:name" style="display: flex;justify-content: center;">Raportul aplicatiei web IN&lt;FORM&gt;ATIX</h1>
+          <p role="doc-subtitle" property="schema:alternateName" style="display: flex;justify-content: center;">
+            în formatul Scholarly HTML 
+          </p>
+        </header>
+          </article>
+
+   
+    <div role="contentinfo">
+        <section typeof="sa:AuthorsList">
+        <h2>  Autori</h2>
+        <ul>
+            <li typeof="sa:ContributorRole" property="schema:author">
+            <span typeof="schema:Person"
+                  resource="">
+                  <meta property="schema:givenName" content="Andrei">
+                  <meta property="schema:familyName" content="Murguleț">
+                  <span property="schema:name">Andrei Murguleț</span>
+            </span>
+            <a href="#note1" property="sa:roleAction" resource="#note1" rel="footnote">1</a>
+            <ul>
+                <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                  <a href="mailto:murguletandrei2003@gmail.com"
+                     property="schema:email">murguletandrei2003@gmail.com</a>
+                </li>
+                <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                    <a href="tel:+0742232549" >+0742232549 </a>
+                </li>
+              </ul>
+                </li>
+                <li typeof="sa:ContributorRole" property="schema:author">
+                    <span typeof="schema:Person"
+                          resource="">
+                          <meta property="schema:givenName" content="Monica">
+                          <meta property="schema:additionalName" content="Gabriela">
+                          <meta property="schema:familyName" content="Repede">
+                          <span property="schema:name">Monica G. Repede</span>
+                    </span>
+                    <a href="#note1" property="sa:roleAction" resource="#note1" rel="footnote">1</a>
+                    <ul>
+                        <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                          <a href="mailto:monicagabrielarepede@gmail.com"
+                             property="schema:email">monicagabrielarepede@gmail.com</a>
+                        </li>
+                        <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                            <a href="tel:+0752178676" property="schema:telephone">+0752178676</a>
+                        </li>
+                      </ul>
+                </li>
+        </ul>
+        </section>
+    </div>
+    <section typeof="sa:Abstract" id="abstract" role="doc-abstract">
+        <h2> Abstract</h2>
+        <p> Acest raport are rolul de a vă face o introducere în utilitatea și utilizarea aplicației web IN&lt;FORM&gt;ATIX.<br>
+            Mai jos veți regăsi informații despre paginile site-ului alături de toate facilitățile acestuia. Sperăm că vă va fi de ajutor!
+        </p>
+
+    </section>
+
+    <section id="introduction" role="doc-introduction">
+        <h2>1 Introducere</h2>
+      <h3>1.1 Purpose</h3>
+        <p> IN&lt;FORM&gt;ATIX este o aplicație web ce are ca scop învățarea programării de către elevii de liceu, prin intermediul unor probleme și materiale, pe tematici diverse. Problemele sunt validate de personalul abrobat (admini) și evaluate de către profesorii clasei. </p>
+       <h3>1.2 Document Conventions</h3>
+         <p>Cuvintele care sunt scrise astfel: <i>exemplu</i> vor reprezenta link-uri.<br>
+        Pozele atașate sunt in diferite formate ce ilustrează trăsătura de web-responsive a siteului.</p>
+
+         <h3>1.3 Intended Audience and Reading Suggestions</h3>
+         <p>Acest document este adresat atât utilizatorilor aplicației, oferind detalii cu privire la utilizarea
+            acesteia, cât și oamenilor de specialitate, oferind detalii cu privire la implementarea ei.</p>
+         <h3>1.4 Product Scope</h3>
+         <p>Aplicația web IN&lt;FORM&gt;ATIX oferă utilizatorilor posibilitatea de a învăța informatica prin intermediul unor probleme bine alese.
+            Problemele informatice vor fi propuse de anumite clase de utilizatori (profesorii) și vor fi aprobate de către administrator.
+         O problemă poate avea anumite TAG-uri (ca de exemplu: ușoară/medie/grea, capitolul informatic din care face parte e.g programare dinamică, bkt, etc.) 
+         Profesorii vor putea construi clase și adăuga elevii (care au deja cont) în aceste clase în baza unor identificatori (username). 
+         De asemenea, profesorii vor putea da teme fie propunând probleme, fie alegând din mulțimea de probleme existente. 
+         Elevii vor putea să rezolve probleme și să trimită soluțiile lor pentru o evaluare realizată de către profesor, vor putea comenta la o anumită 
+         problemă pentru a oferi ponturi colegilor sau marca problemele cu un număr de stele (1-5).
+         De asemenea o problemă poate fi exportată/importată într-un format open (XML / JSON / CSV, etc.) 
+         Se vor construi rapoarte oferind statistici pentru utilizator (câte probleme a trimis, câte sunt corecte, etc.) și rapoarte privitoare la fiecare problemă (câți utilizatori au încercat-o, câți au reușit să o facă, etc.) </p>
+        </section>
+
+        <section id="Description">
+            <h2>2 Overall Description</h2>
+
+            <h3>2.1 Product Perspective</h3>
+            <p>Aplicația este de sine stătătoare, aceasta preluând rezolvările elevilor și transmițând mai departe profesorilor soluția pentru a fi corectată.</p>
+            <div role="presentation" id="image">
+                <figure>
+                    <a href="diagrama-context.png" > <img src="diagrama-context.png" width="700"></a>
+                    <figcaption style="display: flex;justify-content: center;">Fig1: Diagrama de context</figcaption>
+                </figure>
+            </div>
+
+            <h3>2.2 Product Functions</h3>  
+           <p> Funcțiile principale oferite de către aplicația noastră sunt: 
+            <li>crare cont</li>
+            <li>logare</li>
+            <li>vizualizare materiale</li>
+            <li>vizualizare probleme (export, încărcare soluții și statistici)</li>
+            <li>statistici utilizator, istoric probleme</li>
+            <li>vizualizare clasă profesor (creare teme, propune problemă, creează clasă, vezi clasa, evalueză problemă)</li>
+            <li>vizualizare clasă elev (vezi temă, vezi colegi, acces probleme din temă)</li>
+            <li>validare probleme propuse (disponibilă doar adminilor)</li>
+        </p>
+           <div role="presentation" id="image">
+            <figure>
+                <a href="diagrama-container.png" > <img src="diagrama-container.png" width="700"></a>
+                <figcaption style="display: flex;justify-content: center;">Fig2: Diagrama de container</figcaption>
+            </figure>
+        </div>
+           <h3>2.3 User Classes and Characteristics</h3>
+            <p>Aplicația va fi utilizată de către elevii și profesorii ce doresc să aprofundeze cunoștiințe din domeniul informaticii sau doresc să gestioneze o clasă de asemenea dornică.
+            Cele patru categorii de utilizatori sunt: cei nelogați, elevi logați, profesori logați, administrator. Cei nelogați nu vor putea utiliza funcțiile aplicației fără să
+            își facă cont deoarece funcționalitățile implică relaționarea cu o bază de date ce nu poate fi accesată altfel. Clienții logați(elevi, profesori, administrator) au 
+            acces la funcționalitățile aplicației cu mici diferențe de permisiuni. Elevii au acces la funcția de acasă, materiale, probleme, statistici, clase (din care fac parte, e.g. clasa lor și CEX) și profil.
+            Profesorii au acces la aceleași plus dețin opțiunea de a avea mai multe clase 
+            sub îndrumare, cărora le poate creea teme, compune probleme personalizate, corecta probleme și de a propune probleme spre validare oficială. Administratorul are acces la problemele propuse și trebuie să le valideze sau invalideze.
+            </p>
+
+            <h3>2.4 Operating Environment</h3>
+            <p>Aplicația va putea fi utilizată de pe orice browser web, atât de pe un calculator, cât și de pe un
+                dispozitiv mobil.</p>
+
+            <h3>2.5 Design and Implementation Constraints</h3>
+            <p>Pentru a putea fi utilizată, aplicația trebuie să fie încărcată pe un domeniu web, deci este necesară
+                și existența unui server.</p>
+
+            <h3>2.6 User Documentation</h3>
+            <p>Acest document este suficient pentru ca utilizatorul să poată să folosească aplicația. Totodată
+                denumirile și instrucțiunile oferite în cadrul aplicației sunt suficient de clare.</p>
+
+            <h3>2.7 Assumptions and Dependencies</h3>
+            <p>Aplicația este dependentă de co-existența atât a elevilor cât și a profesorilor pentru a fi considerată în funcțiune. 
+                Cu toate acestea existența unui elev fără clasă sau a unui profesor ce nu are clase este posibilă și transformă platforma într-o simplă pagină cu probleme și resurse de învățare.</p>
+            </section>
+    <section id="Structura">
+        <h2>3 External Interface Requirements</h2>
+
+        <h3>3.1 Interfață</h3>
+        <p>Mai jos va fi prezentată fiecare parte a site-ului, pe rând, detaliată.Pentru a putea urmări mai ușor,la fiecare pagină 
+            este atașată o poză.Pagina de <i><a href="../home.html"> logare</a></i> este cea care face legătura cu facilitățile aplicației. </a>.
+    </section>
+
+    <section id="home">
+        <h4>3.1.1 Pagina de logare</h4>
+        <p>Pagina de <i><a href="../home.html"> logare</a></i> este prima pagină cu care interacționează utilizatorul prin intermediul aplicației.
+            În cazul în care acesta nu și-a creat încă cont pe platformă, poate alege opțiunea de "<i><a href="../login/pagina_fara_cont.html">nu am cont</a></i>"(care îl duce pe pagina de înregistrare) și să își creeze unul.
+            Altfel, dacă utlizatorul a mai folosit această platformă, își va introduce numele contului și parola pentru a se conecta.Abia după acest pas va putea utiliza facilitățile siteului. 
+        <br>În cazul în care utilizatorul este administrator, acesta va avea un cont prestabilit reținut în baza de date cu care se va conecta.
+        <br>Informațiile din casetele de logare vor fi preluate de backend.
+        </p>
+            <div class="unu">
+                    <div role="presentation" id="image2">
+                        <figure>
+                            <a href="autentificare.jpg"> <img src="autentificare.png"></a>
+                            <figcaption style="display: flex;justify-content: center;"> Fig3: Pagina de autentificare.</figcaption>
+                        </figure>
+                    </div>
+                    <div role="presentation" id="image1">
+                        <figure>
+                            <a href="pagina_fara_cont.png" > <img src="pagina_fara_cont.png"></a>
+                            <figcaption style="display: flex;align-items: center;justify-content: center;">Fig4: Pagina de înregistrare</figcaption>
+                        </figure>
+                    </div> 
+                
+            </div>
+    </section>
+
+
+    <section id="inregistrare" class="inregistrare" style="margin-top: 50px;">
+        <h4>3.1.2 Pagina de înregistrare</h4>
+        <p>
+            Această pagină are rolul de a crea un nou cont pe platformă, prin intermediul introducerii datelor oferite de utilizator în baza de date, transmite apoi către backend.
+            Pentru a crea un cont valid, următoarele informații sunt necesare și obligatorii: nume, prenume, nume de utlizator, număr de telefon, parola și tipul de cont(profesor sau elev).
+            Pentru acuratețea informațiilor generate și personalizarea interacțiunii cu aplicația, există și câmpuri opționale: țara, oraș, liceu, clasa, email.
+            O dată ce datele au fost introduse, se poate confirma înregistrarea (sau invalida în cazul in care datele sunt introduse greșit sau au fost introduse deja de o alta persoană), iar utilizatorul va fi trimis să își completeze aceste date în formularul de autentificare.
+            În cazul în care nu se mai dorește a crea un cont sau contul care s-a vrut a fi creat există deja, există și opțiunea de "înapoi", care va trimite utlizatorul pe <i><a href="home.html">pagina de autentificare</a></i>.
+        </p>
+    </section>
+        </div>
+
+
+    <section id="acasa">
+    <h4>3.1.3 Pagina acasă</h4>
+     <p>
+        Această pagină are scop pur informativ. 
+        Aici vor fi toate noutățile ce privesc update-uri sau funcții noi în aplicație, alături de o descriere scurtă a ce oferă platforma.
+        La fel ca restul paginilor principale, aceasta are o bară de navigare,prin care utilizatorul poate ajunge în diverse zone de interes de pe site
+        (ex.: pagina de probleme, pagina de materiale, pagina clasei din care face parte în cazul în care utlizatorul e elev sau clasele la care predă, în cazul în care e profesor,
+       pagina profilului sau pagina de autentificare-deconectare)
+     </p>
+            <div role="presentation" id="imageBara">
+            <figure>
+                <a href="bara.png" > <img src="bara.png"></a>
+                <figcaption style="display: flex;align-items: center;justify-content: center;">Fig5: Bara de navigare</figcaption>
+            </figure>
+            </div>
+    </section>
+
+    <section id="deconectare">
+        <h4>3.1.4 Butonul de deconectare</h4>
+        <p>
+            Acesta are rolul de a deconecta utilizatorul de pe contul său. Îl întoarce pe pagina în care se poate conecta, introducând numele contului și parola.
+        </p>
+    </section>
+
+    <section id="probleme">
+        <h4>3.1.5 Pagina de probleme</h4>
+        <p>
+            Aici se găsesc diverse categorii de probleme din domeniul informaticii(backtracking, programare dinamica, etc.).
+            Fiecare din aceste categorii are o listă de probleme,unele mai grele, altele mai ușoare, unele mai neobișnuite, iar altele elementare, ce se pot vedea apăsând pe categoria dorită.
+            Utilizatorul iși poate alege din aceste probleme ce vrea să rezolve, dând click pe titlul problemei.
+            <br>Când utilizatorul apasă pe titlul unei problemei, id-ul acesteia se trimite catre backend și acesta returnează datele problemei (cerința, tag-urile si dificultatea) alături de diferite statistici.
+        </p>
+        <h4>3.1.6 Pagina problemei</h4>
+        <p>
+            După ce s-a ales problema ce urmează a fi rezolvată, userul aplicației este redirecționat pe altă pagină, unde va putea vedea:
+            titlul problemei, cerința problemei, statisticile problemei (câți utilizatori au incărcat problema, câți au rezolvat-o corect, media notelor și a ratingurilor) și diverse comentarii lăsate de alți utilizatori ai aplicației,cu posibilitatea de a lăsa și el un comentariu sau un sfat.
+            În plus fiecare elev poate acorda și un rating(număr de stele) pentru problemă.
+            Acesta își poate trimite soluția proprie (încarcând-o în format txt sau prin inserarea rezolvării in spațiul specificat) pentru cerința în cauză, la care poate primi chiar și o notă(sau si observații) din partea profesorului de la clasă, pe care le poate vedea tot în această pagină
+            (bineînteles, dacă elevul face parte dintr-o clasă).
+            Cel care a încărcat soluții, poate să iși vizualizeze ultima soluție încărcată sau ultima soluție notată. Cei ce doresc, pot exporta datele problemei(id, tag, categorie, enunț) în format JSON.
+            În cazul în care profesorul vrea să trimită o soluție, nu se intâmplă nimic, dar din păcate acesta nu va primi o notă pentru munca depusă.
+            Interacțiunile utilizatorului cu interfața vor fi gestionate de backend si tratate corespunzător.
+        </p>
+            <div role="presentation" id="imageProblema">
+                <figure>
+                    <a href="problema.png" > <img src="problema.png"></a>
+                    <figcaption style="display: flex;align-items: center;justify-content: center;">Fig6: Pagina unei probleme</figcaption>
+                </figure>
+            </div>   
+    </section>
+
+    <section id="materiale">
+               <h4>3.1.7 Pagina de materiale</h4>
+               <p>
+                  Această pagină are ca scop introducerea conceptelor elementare ale capitolelor importante din domeniul informaticii.
+                  Organizate pe categorii, userul aplicației poate găsi diferite linkuri către site-uri web ce prezintă teoria, dar și propriile noastre resurse.
+               </p>
+               <div class="unu">
+                <div role="presentation" id="image1">
+                    <figure>
+                        <a href="probleme.png"> <img src="probleme.png"></a>
+                        <figcaption style="display: flex;justify-content: center;"> Fig7: Pagina de probleme.</figcaption>
+                    </figure>
+                </div>
+                <div role="presentation" id="image2">
+                    <figure>
+                        <a href="materiale.png"> <img src="materiale.png"></a>
+                        <figcaption style="display: flex;justify-content: center;"> Fig8: Pagina cu materiale.</figcaption>
+                    </figure>
+                </div>
+                <div role="presentation" id="image1">
+                    <figure>
+                        <a href="material.png" > <img src="material.png"></a>
+                        <figcaption style="display: flex;align-items: center;justify-content: center;">Fig9: Pagina unui material</figcaption>
+                    </figure>
+                </div>   
+                </div>
+    </section>
+
+    <section id="profil">
+        <h4>3.1.8 Pagina profilului utilizatorului</h4>
+        <p>
+            Pe această pagină utilizatorul iși poate revedea datele completate atunci când s-a înregistrat pe această platformă.
+            De asemenea, are parte de un raport privind problemele lucrate( numărul de probleme corecte,numărul de probleme încercate).
+            Din această interfață se pot accesa ușor problemele pe care le-a încărcat. Acesta primește și o sugestie de problemă încă nerezolvată pe care o poate încerca
+            în caz de nu poate alege de care problemă să se apuce. 
+        </p>
+        <div role="presentation" id="image2">
+            <figure>
+                <a href="profil.png"> <img src="profil.png"></a>
+                <figcaption style="display: flex;justify-content: center;"> Fig10: Pagina profilului.</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <div class="doi">
+    <div id="clasa" style="display: flex;align-items: center;justify-content: center;">
+    <section class="clasa">
+        <h4>3.1.9 Pagina clasei</h4>
+            Pagina clasei diferă în funcție de tipul utilizatorului-profesor sau elev. Vom prezenta separat mai departe aceste categorii:
+            <ol>
+                <li>
+                   <h4>Pagina clasei pentru elevi</h4>
+                   <p>
+                    Aici elevul iși poate vedea clasa. Mai exact, poate vizualiza numele profesorului și numele tuturor colegilor ce fac parte din aceeași clasă cu el.
+                    În plus, dacă are teme active, ce încă nu au ajuns la termenul de finalizare, acestea apar în coloana de "teme în desfașurare";
+                    dacă are teme terminate (dacă termenul limită a fost atins), acestea apar în coloana de "teme terminate".
+                    De asemenea, fiecare dintre aceste teme, are o listă cu linkurile la problemele ce fac parte din temă, cu scopul de a accesa mai ușor pagina ce conține cerința problemei.
+                   </p>
+                </li>
+                <li>
+                    <h4>Pagina clasei pentru profesori</h4>
+                        În cazul profesorilor, lucrurile devin mai complexe. Profesorul își vede toate clasele la care predă(și le are deja introduse în aplicație e.g. Fig14).
+                        Acesta poate, desigur, și să creeze o clasă, fiind o procedură destul de simplă: 
+                        <ol>
+                            <li>Adaugă anul și litera clasei</li>
+                            <li>Adaugă profilul clasei(matematică-informatică, științe ale naturii etc.)</li>
+                            <li>Adaugă id-urile conturilor elevilor pe care îi vrea să îi adauge</li>
+                        </ol>
+                        <div class="unu">
+                        <div role="presentation" id="image5" >
+                            <figure>
+                                <a href="creeaza_clasa.png" ><img src="creeaza_clasa.png"></a>
+                                <figcaption style="display: flex;justify-content: center;">Fig11: Creează clasa.</figcaption>
+                            </figure>
+                        </div>
+                        <div role="presentation" id="image5" >
+                            <figure>
+                                <a href="creeaza_tema.png" ><img src="creeaza_tema.png"></a>
+                                <figcaption style="display: flex;justify-content: center;">Fig12: Creează tema.</figcaption>
+                            </figure>
+                        </div>
+                        </div>
+
+                        De multe ori, profesorul e nevoit să dea teme elevilor pentru a exersa noțiunile noi introduse și mai apoi să le corecteze; 
+                        acest lucru este simplificat cu ajutorul acestei platforme:
+                        <ol>
+                            <li>  Profesorul decide cărei clase dorește să îi asigneze o temă </li>
+                            <li>Trece ID-urile problemelor pe care dorește să le pună în temă
+                                <ul><li>În cazul în care profesorul nu găsește o problemă pe placul său, poate propune o problemă proprie, 
+                                    oferind doar: numele problemei și cerința.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                        Pentru a corecta problemele oferite la temă, profesorul se poate uita în temele asignate clasei pe care dorește să o evalueze.
+                        Acestea conțin lista cu probleme aleasă de profesor la crearea respectivei teme. 
+                        Fiecare dintre aceste probleme duce la cerința problemei și la rezolvările elevilor din acea clasă (dacă există). 
+                        De aici, profesorul poate alege câte un student pe rând sau să ia unul random și să îi evalueze soluția trimisă.
+                        În cazul în care soluția prosusă de elev este suspicioasă sau necesită îmbunătățiri sau chiar felicitări, profesorul îi poate trimite un comentariu
+                        elevului, pe care îl va vedea doar dânsul. 
+                        <br><br>În cazul în care profesorul vrea să contribuie la evoluția site-ului, poate propune o problemă proprie, 
+                            oferind: numele problemei, cerința, tagurile aferente capitolelor informatice și tagurile aferente greutății problemei. 
+                                Această problemă va fi validată (sau nu) în timp cât mai scurt de către administratorul aplicației.
+                </li>
+            </ol>
+    </section>
+</div>
+    <div class="poze" style="display: flex; justify-content: center; align-items: center;">
+    <div class="unu">
+        <div role="presentation" id="image5" >
+            <figure>
+                <a href="clasa_elev.png" ><img src="clasa_elev.png"></a>
+                <figcaption style="display: flex;justify-content: center;">Fig13: Structura paginii clasa a elevului.</figcaption>
+            </figure>
+        </div>
+        <div typeof="sa:image" role="presentation" id="image6">
+            <figure>
+                <a href="clasa_prof.png"><img src="clasa_prof.png"></a>
+                <figcaption style="display: flex;justify-content: center;">Fig14: Structura paginii clase a profesorului și relația cu pagina de clasă individuală.</figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+</div>
+<section id="admin">
+    <h4>3.1.10 Pagina adminului</h4>
+    <p>
+        La această pagină doar superuserii (cei care au cont special de admin) au acces. Aici se realizează aprobarea de probleme propuse de profesori. 
+        Adminului îi va apărea titlul, dificultatea și capitolul informatic din care face parte problema și va decide daca va fi aprobată sau refuzatăș de asemenea dacă nu este decis, poate trece la urmatoarea problemă. 
+    </p>
+    <div role="presentation" id="image2">
+        <figure>
+            <a href="admin.png"> <img src="admin.png"></a>
+            <figcaption style="display: flex;justify-content: center;">Fig15: Pagina admin.</figcaption>
+        </figure>
+    </div>
+</section>
+
+<section id="admin">
+    <h4>3.1.11 Accesul la probleme prin API</h4>
+    <p> Problemele pot fi accesibile și altor aplicatii web prin intermediul unui API simplu. Se pot accesa:  <i><a href="../api/get_probleme.php"> toate problemele</a></i>,<i><a href="../api/get_problema.php?categorie=Backtracking"> probleme dupa o categorie anume</a></i>,<i><a href="../api/get_problema.php?tag=usoara"> probleme in functie de dificultate</a></i>.
+      </p>
+</section>
+
+
+
+    <section id="motivatii">
+        <h3>3.2 Motivații</h3>
+        <p>
+            În alegerea design-ului am dorit să ajungem la o interfață cât mai plăcută la vedere, ce inspiră atât creativitate cât și un aer de inteligență.
+            Din acest motiv am ales culoarea #32B1A0 (Niagara), ce îmbină tonalități predominante de verde combinate cu nuanțe de albastru, ambele culori însumând sentimente
+             de concetrare și inteligentață cu un aer prietenos ce evită rigiditatea domeniului. 
+        </p>
+        <p>
+            După alegerea culorii, am considerat necesar sa ne decidem asupra unei tematici de fundal și a unei  "mascote". Acestea au rolul să ducă cu gândul într-un mod indirect la domeniul informaticii care să se complementeze de asemenea cu nuanța precedent aleasă.
+            Poziționarea butoanelor de acces este una clasică în funcție de necesitatea generală: butoanele de acasă și deconectare sunt amplasate la începutul respectiv sfârșitul bării de opțiuni iar celelalte orientate spre stânga pentru ușurința de acces.
+        </p>
+    </section>
+
+
+    <section id="Features">
+        <h2>4 System Features </h2>
+        <h3>4.1 Statistici globale </h3>
+       <p>Dupa ce o problemă este încărcată și verificată de către profesor va fi stocată ca și o rezolvare în plus la numărul total al soluțiilor corecte al exercițiului respectiv.
+         Acest contor este vizibil pentru toți utilizatorii alături de o statistică formată din feedback-ul primit de la elevi sub forma de rating și comentarii/ observații făcute de aceștia referitoare la problemă.</p>
+      
+         <h3>4.2 Generarea recomandărilor</h3> 
+       <p>În funcție de problemele încărcate/rezolvate se va acorda o sugestie de problemă fiecărui cont.</p>
+    </section>
+
+    <section id="Requirements">
+        <h2>5. Other Nonfunctional Requirements</h2>
+        <h3>5.1 Necesități de securitate-Implementarea măsurilor de securitate</h3>
+
+        <ul>
+            <li>Securizarea mediului web (astfel se previn erorile serverului web prin utilizarea de JWT-uri)</li>
+            <li>Validarea input-ului dat de utilizator (astfel se previn atacurile asupra datelor, SQL injection)</li>
+            <li>Protejarea datelor utilizatorului (astfel se folosește criptarea parolelor)</li>
+        </ul>
+        <h3>5.2 Software Quality Attributes</h3>
+        <p>Aplicat, ia web este una portabilă, aceasta putând fi accesată și de pe calculator, și de pe un dispozitiv mobil.</p>
+
+    </section>
+
+    <section id="Arhitecture">
+        <h2>6. Arhitecture</h2>
+        <h3>6.1 Front end</h3>
+        <p>Mai jos se poate observa o schematizare a paginii noastre dupa cum am prezentat-o și mai sus în poze într-o manieră simplificată</p>
+        <div role="presentation" id="image7">
+            <figure>
+                <a href="legaturi.png" > <img src="legaturi.png" width="700"></a>
+                <figcaption style="display: flex;justify-content: center;">Fig16: Diagramă ilustrativă front end</figcaption>
+            </figure>
+        </div>
+
+        <h3>6.2 Back end</h3>
+        <h4>6.2.1 Comunicarea cu backend-ul</h4>
+       <p>Comunicarea cu backend-ul se realizează prin preluarea datelor ce pot fi completate de utilizator folosind limbajul php si JavaScript. </p>
+        
+       <h4>6.2.2 Structurarea codului</h4>
+        <p>Fiecare script php/html/CSS este salvat individual în propriul fișier, in foldere specifice, favorizând astfel modularizarea codului.</p>
+        
+        <h4>6.2.3 Stocarea datelor</h4>
+         <p>Datele sunt stocate într-o baza de date postgres existând diverse tabele pentru salvarea informațiilor.
+            Cateva tabele cheie pentru funcționarea proiectului sunt: users (ce conține datele utilizatorului), soluții (ce stochează soluțiile încărcate), probleme (ce conțin problemele de rezolvat),
+             clase (ce permite organizarea elevilor în clase și gestionarea acestora de către profesori) , teme (ce rețin temele elevilor acordate de profesori) și tabele de statistici(pentru note, rating și comenatarii).
+         </p>
+    </section>
+       <section id="acks">
+            <h2>Mulțumiri</h2>
+            <p> Am dori să îi mulțumim domnului profesor de la laboratorul de Tehnologii Web deoarece ne-a oferit oportunitatea de a lucra la această temă pe care am ajuns să o îndrăgim.<br>
+                Sperăm că o să îi placă și dumnealui; dacă vă place site-ul nostru, puteți să-i transmiteți laudele și dumnealui.
+            </p>
+        </section>
+        
+       
+        <footer id="note1">
+            <h2>Note de subsol</h2>
+            <p>1.Autorii au contribuit egal.</p>
+        </footer>
+</body>
+</html>

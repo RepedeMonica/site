@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/load.css">
+<link rel="stylesheet" href="../CSS/creeaza_clas.css">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+   
+    <div class="container">
+        <div class="container-rotativ">
+            <img src="../Images/om_rotativ.png" alt="Skater">
+        </div>
+        
+        <form action="creaza_clasa.php" method="post" onsubmit="return validateForm()">
+            <div class="centrare">
+                <h2>Creează Clasă Nouă</h2>
+                <h4>sau adaugă un elev într-o clasă deja existentă</h4>
+            </div>
+    
+            <div class="form-group">
+                <label for="nume_clasa">Anul Clasei</label>
+                <select id="nume_clasa" name="nume_clasa" required>
+                    <option value="" disabled selected>Selectează anul clasei</option>
+                    <option value="IX">IX</option>
+                    <option value="X">X</option>
+                    <option value="XI">XI</option>
+                    <option value="XII">XII</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="litera_clasa">Litera Clasei</label>
+                <input type="text" id="litera_clasa" name="litera_clasa" required maxlength="1" pattern="[A-Z]">
+            </div>
+            <div class="form-group">
+                <label for="profil">Profil</label>
+                <select id="profil" name="profil" required>
+                    <option value="" disabled selected>Selectează profilul clasei</option>
+                    <option value="matematica-informatica">matematica-informatica</option>
+                    <option value="stiinte ale naturii">stiinte ale naturii</option>
+                    <option value="filologie">filologie</option>
+                    <option value="stiinte sociale">stiinte sociale</option>
+                    <option value="CEX">CEX</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_cont_elev">ID-urile Conturilor Elevilor (Separate prin virgulă)</label>
+                <textarea id="id_cont_elev" name="id_cont_elev" rows="4" required></textarea>
+            </div>
+            <div class="centrare">
+                <button type="button" class="button" onclick="window.location.href='../baraNavigare/clase_prof.html'">Înapoi</button>
+                <button type="submit" class="button">Creează Clasă</button>
+            </div>
+        </form>
+        <div class="reguli">
+            <h3>Aveti in vedere:</h3>
+            <ul>
+                <li> 1: Numărul maxim de elevi sugerat pentru o clasă este 30.</li>
+                <li> 2: Fiecare clasă trebuie să aibă un nume unic.</li>
+                <li> 3: Creați cu mare atenție clasa!</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+    function validateForm() {
+        var litera_clasa = document.getElementById('litera_clasa').value;
+        if (!/^[A-Z]$/.test(litera_clasa)) {
+            alert("Litera clasei trebuie să fie o literă mare.");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>
