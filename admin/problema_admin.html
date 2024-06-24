@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/problema_admin.css">
+<style>
+    form {
+background-color: rgba(206, 220, 220, 0.641);
+border: 1px solid #ccc;
+border-radius: 5px;
+padding: 20px;
+width: 100%;
+max-width: 500px;
+box-sizing: border-box;
+}
+.centrare{
+text-align: center;
+}
+</style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <div class="container-rotativ">
+            <img src="../Images/om_rotativ.png" alt="Skater">
+        </div>
+    </div>
+    
+    <div class="container">
+        <form method="post" action="aproba.php">
+            <h2>Problemă propusă</h2>
+            <div class="form-group">
+                <label id="label_id">Id</label>
+                <p id="id" class="input-value"></p>
+                <input type="hidden" name="id" id="id_input">
+            </div>
+            <div class="form-group">
+                <label id="label_nume_problema">Numele Problemei</label>
+                <p id="nume_problema" class="input-value"></p>
+                <input type="hidden" name="nume_problema" id="nume_problema_input">
+            </div>
+            <div class="form-group">
+                <label id="label_cerinta">Cerința</label>
+                <p id="cerinta" class="input-value"></p>
+                <input type="hidden" name="cerinta" id="cerinta_input">
+            </div>
+            <div class="form-group">
+                <label id="label_taguri">Tag-uri</label>
+                <p id="taguri" class="input-value"></p>
+                <input type="hidden" name="taguri" id="taguri_input">
+            </div>
+            <div class="form-group">
+                <label id="label_dificultate">Dificultate</label>
+                <p id="dificultate" class="input-value"></p>
+                <input type="hidden" name="dificultate" id="dificultate_input">
+            </div>
+            <div class="centrare">
+            <button type="submit" class="button" onclick="prepareApprovalData()">Aproba</button>
+            <button type="button" class="button" onclick="rejectProblem()">Refuza</button>
+            <button type="button" class="button" id="next-problem">Urmatoarea</button>
+            <button type="button" class="button" onclick="window.location.href='pagina_administrator.html'">Înapoi</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = parseInt(urlParams.get('id'));
+    if (typeof id === 'number' && id > 0) {
+        fetch(`get_index.php?id=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.index !== undefined) {
+                    currentIndex = data.index;
+                    fetchProblema(currentIndex);
+                } else {
+                    console.error('Error:', data.error);
+                    fetchProblema(currentIndex);
+                }
+            })
+            .catch(error => console.error('Error fetching index:', error));
+    } else {
+        fetchProblema(currentIndex);
+    }
+
+    document.getElementById('next-problem').addEventListener('click', () => {
+        currentIndex++;
+        fetchProblema(currentIndex);
+    });
+});
+
+function fetchProblema(id) {
+    fetch(`fetch_probleme.php?id=${id}`)
+        .then(response => response.json())
+        .then(problema => {
+            if (problema) {
+                document.getElementById('id').textContent = problema.id;
+                document.getElementById('id_input').value = problema.id;
+                document.getElementById('nume_problema').textContent = problema.titlu;
+                document.getElementById('nume_problema_input').value = problema.titlu;
+                document.getElementById('cerinta').textContent = problema.enunt;
+                document.getElementById('cerinta_input').value = problema.enunt;
+                document.getElementById('taguri').textContent = problema.tag;
+                document.getElementById('taguri_input').value = problema.tag;
+                document.getElementById('dificultate').textContent = problema.categorie;
+                document.getElementById('dificultate_input').value = problema.categorie;
+            } else {
+                currentIndex = 0;
+                fetchProblema(currentIndex);
+            }
+        })
+        .catch(error => console.error('Error fetching problema:', error));
+}
+
+function prepareApprovalData() {
+    document.getElementById('id_input').value = document.getElementById('id').textContent;
+    document.getElementById('nume_problema_input').value = document.getElementById('nume_problema').textContent;
+    document.getElementById('cerinta_input').value = document.getElementById('cerinta').textContent;
+    document.getElementById('taguri_input').value = document.getElementById('taguri').textContent;
+    document.getElementById('dificultate_input').value = document.getElementById('dificultate').textContent;
+}
+
+function rejectProblem() {
+    const id = document.getElementById('id').textContent;
+
+    fetch('refuza.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `id=${id}`
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Problema respinsă cu succes.');
+            window.location.href = 'pagina_administrator.html';
+        } else {
+            console.error('Eroare la respingerea problemei.');
+        }
+    })
+    .catch(error => console.error('Eroare la conectarea la server:', error));
+}  
+</script>
+</body>
+</html>

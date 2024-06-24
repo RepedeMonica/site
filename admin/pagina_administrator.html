@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IN&lt;FORM&gt;ATIX</title>
+<link rel="stylesheet" href="../CSS/admi.css">
+</head>
+<body>
+
+<div class="background-overlay"></div>
+
+<div class="container-rotativ">
+    <img src="../Images/om_rotativ.png" alt="Skater">
+</div>
+
+<div class="container">
+    <h1>IN&lt;FORM&gt;ATIX</h1>
+    <p>Bine ați venit!</p>
+    <h2>Pentru a valida sau invalida probleme propuse de profesori poți accesa lista 
+        <button class="button" id="afiseaza-probleme">următoare</button>
+    </h2>
+
+    <div class="container-probleme" id="container-probleme">
+        
+    </div>
+    <div class="button-container">
+        <button type="button" class="submit-button" onclick="window.location.href='../home.html'">Deconectare</button>
+    </div>
+</div>
+<script>
+document.getElementById('afiseaza-probleme').addEventListener('click', function() {
+    fetch('get_probleme.php?action=fetch_probleme')
+        .then(response => response.json())
+        .then(probleme => {
+            var problemeContainer = document.getElementById('container-probleme');
+            problemeContainer.innerHTML = ''; 
+
+            if (probleme.length > 0) {
+                probleme.forEach(function(problema) {
+                    var problemaDiv = document.createElement('div');
+                    problemaDiv.className = 'problema';
+                    problemaDiv.innerHTML = '<h3>' + 
+                                            '<a href="verifica_problema.php?id=' + encodeURIComponent(problema.id)+' ">Problema ' +problema.id+ '</a></h3>';
+                    problemeContainer.appendChild(problemaDiv);
+                });
+            } else {
+                problemeContainer.innerHTML = '<p>Nu aveți probleme de aprobat.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching problems:', error);
+            document.getElementById('container-probleme').innerHTML = '<p>Nu s-a putut încărca lista de probleme.</p>';
+        });
+});
+</script>
+</body>
+</html>
