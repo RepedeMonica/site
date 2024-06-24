@@ -1,0 +1,112 @@
+.error-box {
+    background-color: #ffcccc;
+    border: 1px solid #ff0000;
+    color: #ff0000;
+    padding: 10px;
+    margin: 10px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('fundal.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.75);
+    z-index: -1;
+}
+
+.container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.form-container {
+    width: 300px;
+    margin: auto;
+}
+
+.form-container input[type="number"],
+.form-container input[type="tel"],
+.form-container select,
+.form-container input[type="file"],
+.form-container input[type="email"],
+.form-container input[type="text"],
+.form-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.form-container input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.options {
+    text-align: center;
+    margin-top: 20px;
+}
+.container-rotativ {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+    margin-top: 20px;
+}
+img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s;
+}
+.container-rotativ:hover img {
+    transform: rotate(360deg);
+}
+@media only screen and (min-width: 40em) {
+    .form-container {
+        width: 90%;
+    }
+
+    .container {
+        padding: 0 10px;
+    }
+}
+
+@media only screen and (min-width: 48em) {
+    .form-container {
+        width: 70%;
+    }
+}
+
+@media only screen and (min-width: 64em) {
+    .form-container {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 80em) {
+    .form-container {
+        width: 40%;
+    }
+}

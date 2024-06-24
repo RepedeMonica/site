@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IN&lt;FORM&gt;ATIX</title>
+    <link rel="stylesheet" href="../CSS/load.css">
+    <link rel="stylesheet" href="../CSS/cls.css">
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+
+    <div class="container hidden" id="content-container">
+        <div class="clasa-info">
+            <h2>Clasele Mele</h2>
+            <div id="clasa-info" class="clasa-list"></div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('overlay');
+            const spinner = document.getElementById('loading-spinner');
+
+            function showContent() {
+                document.getElementById('header').classList.remove('hidden');
+                document.getElementById('content-container').classList.remove('hidden');
+                overlay.style.display = 'none';
+            }
+
+            function fetchHeader() {
+                return fetch('../templates/header.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header').innerHTML = data;
+                    })
+                    .catch(error => console.error('Eroare la încărcarea header-ului:', error));
+            }
+
+            function fetchAll() {
+                return fetch('clase_stud.php?action=fetch_clasa')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('A apărut o eroare în timpul solicitării.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            throw new Error(data.error);
+                        }
+                        
+                        const clasaInfoElement = document.getElementById('clasa-info');
+
+                        if (data.length === 0) {
+                            clasaInfoElement.innerHTML = '<p>Nu ai clase încă.</p>';
+                            return;
+                        }
+
+                        data.forEach(clasa => {
+                            clasaInfoElement.innerHTML += `
+                                <div class="clasa-item">
+                                    <p><strong>Clasa:</strong> ${clasa.clasa}<br>
+                                    <strong>Profesor:</strong> ${clasa.profesor}</p>
+                                    <div class="teme-container">
+                                        <div class="teme-column">
+                                            <button class="chenar-button teme-active-title" data-clasa="${clasa.clasa}" data-id_prof="${clasa.id_prof}">Teme in desfasurare</button>
+                                            <div class="teme-active" style="display: none;"></div>
+                                        </div>
+                                        <div class="teme-column">
+                                            <button class="chenar-button teme-terminate-title" data-clasa="${clasa.clasa}" data-id_prof="${clasa.id_prof}">Teme Terminate</button>
+                                            <div class="teme-terminate" style="display: none;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="students-container">
+                                        <button class="chenar-button afiseaza-colegi" data-clasa="${clasa.clasa}" data-id_prof="${clasa.id_prof}">Colegi de clasă</button>
+                                        <ul class="category-list" id="colegi-${clasa.clasa}" style="display:none;"></ul>
+                                    </div>
+                                </div>`;
+                        });
+
+                        const classItems = document.querySelectorAll('.clasa-item');
+                        if (classItems.length === 1) {
+                            classItems[0].classList.add('large');
+                        }
+
+                        document.querySelectorAll('.teme-active-title').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const clasa = this.getAttribute('data-clasa');
+                                const id_prof = this.getAttribute('data-id_prof');
+                                const temeActiveContainer = this.nextElementSibling;
+
+                                if (temeActiveContainer.style.display === 'none' || temeActiveContainer.innerHTML === '') {
+                                    fetchTeme(clasa, id_prof, 'active', temeActiveContainer);
+                                } else {
+                                    temeActiveContainer.style.display = 'none';
+                                }
+                            });
+                        });
+
+                        document.querySelectorAll('.teme-terminate-title').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const clasa = this.getAttribute('data-clasa');
+                                const id_prof = this.getAttribute('data-id_prof');
+                                const temeTerminateContainer = this.nextElementSibling;
+
+                                if (temeTerminateContainer.style.display === 'none' || temeTerminateContainer.innerHTML === '') {
+                                    fetchTeme(clasa, id_prof, 'terminate', temeTerminateContainer);
+                                } else {
+                                    temeTerminateContainer.style.display = 'none';
+                                }
+                            });
+                        });
+
+                        document.querySelectorAll('.afiseaza-colegi').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const clasa = this.getAttribute('data-clasa');
+                                const id_prof = this.getAttribute('data-id_prof');
+                                const colegiContainer = document.getElementById(`colegi-${clasa}`);
+
+                                if (colegiContainer.style.display === 'none' || colegiContainer.innerHTML === '') {
+                                    fetchColegi(clasa, id_prof, colegiContainer);
+                                } else {
+                                    colegiContainer.style.display = 'none';
+                                }
+                            });
+                        });
+
+                        function fetchTeme(clasa, id_prof, type, container) {
+                            fetch(`clase_stud.php?action=fetch_teme&nume_clasa=${clasa}&id_prof=${id_prof}`)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('A apărut o eroare în timpul solicitării.');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data.error) {
+                                        throw new Error(data.error);
+                                    }
+
+                                    container.innerHTML = '';
+                                    let teme = type === 'active' ? data.active : data.terminate;
+                                    let temaIndex = 1;
+
+                                    if (teme.length > 0) {
+                                        teme.forEach(tema => {
+                                            container.innerHTML += `
+                                                <div class="tema-item">
+                                                    <button class="chenar-button afiseaza-probleme" data-id_tema="${tema.id}">Tema ${temaIndex}</button>
+                                                    <div class="probleme-container" id="probleme-${tema.id}" style="display:none;"></div>
+                                                </div>`;
+                                            temaIndex++;
+                                        });
+
+                                        document.querySelectorAll('.afiseaza-probleme').forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const id_tema = this.getAttribute('data-id_tema');
+                                                const problemeContainer = document.getElementById(`probleme-${id_tema}`);
+
+                                                if (problemeContainer.style.display === 'none' || problemeContainer.innerHTML === '') {
+                                                    fetch(`clase_stud.php?action=fetch_probleme_tema&id_tema=${id_tema}`)
+                                                        .then(response => {
+                                                            if (!response.ok) {
+                                                                throw new Error('A apărut o eroare în timpul solicitării.');
+                                                            }
+                                                            return response.json();
+                                                        })
+                                                        .then(data => {
+                                                            if (data.error) {
+                                                                throw new Error(data.error);
+                                                            }
+
+                                                            const problemaExista = data.exista;
+                                                            const problemaPropus = data.propus;
+
+                                                            problemeContainer.style.display = 'block';
+                                                            problemeContainer.innerHTML = '<h4 style="display: none;">Problemele Temei</h4>';
+
+                                                            if (problemaExista.length > 0) {
+                                                                problemaExista.forEach(problema => {
+                                                                    problemeContainer.innerHTML += `
+                                                                        <a href="../probleme/problema.html?id=${encodeURIComponent(problema.id)}">${problema.id} - ${problema.titlu}<br></a>`;
+                                                                });
+                                                            } //else {problemeContainer.innerHTML += '<p>Nu există probleme pentru această temă.</p>';}
+
+                                                            if (problemaPropus.length > 0) {
+                                                                problemaPropus.forEach(problema => {
+                                                                    problemeContainer.innerHTML += `<a href="../probleme/problema_propusa.html?id=${problema.id}">${problema.nume_problema}</a>`;
+                                                                });
+                                                            }
+                                                        })
+                                                        .catch(error => {
+                                                            console.error('Eroare:', error);
+                                                            problemeContainer.innerHTML = '<p>A intervenit o eroare. Vă rugăm să reîncercați mai târziu.</p>';
+                                                        });
+                                                } else {
+                                                    problemeContainer.style.display = 'none';
+                                                }
+                                            });
+                                        });
+
+                                        container.style.display = 'block';
+                                    } else {
+                                        container.innerHTML = '<p>Nu există teme pentru această categorie.</p>';
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Eroare:', error);
+                                    container.innerHTML = '<p>A intervenit o eroare. Vă rugăm să reîncercați mai târziu.</p>';
+                                });
+                        }
+
+                        function fetchColegi(clasa, id_prof, container) {
+                            fetch(`clase_stud.php?action=fetch_colegi&nume_clasa=${clasa}&id_prof=${id_prof}`)
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('A apărut o eroare în timpul solicitării.');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    if (data.error) {
+                                        throw new Error(data.error);
+                                    }
+
+                                    container.innerHTML = '';
+                                    if (data.length > 0) {
+                                        data.forEach(coleg => {
+                                            const colegElement = document.createElement('li');
+                                            colegElement.textContent = `${coleg.nume} ${coleg.prenume}`;
+                                            container.appendChild(colegElement);
+                                        });
+                                        container.style.display = 'block';
+                                    } else {
+                                        container.innerHTML = '<p>Nu există colegi pentru această clasă.</p>';
+                                        container.style.display = 'block';
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Eroare:', error);
+                                    container.innerHTML = '<p>A intervenit o eroare. Vă rugăm să reîncercați mai târziu.</p>';
+                                    container.style.display = 'block';
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Eroare:', error);
+                        const clasaInfoElement = document.getElementById('clasa-info');
+                        clasaInfoElement.innerHTML = '<p>A intervenit o eroare. Vă rugăm să reîncercați mai târziu.</p>';
+                    });
+            }
+            Promise.all([fetchHeader(), fetchAll()]).then(showContent);
+        });
+    </script>
+</body>
+</html>

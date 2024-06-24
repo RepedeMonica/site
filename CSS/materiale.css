@@ -1,0 +1,25 @@
+.contentMateriale {
+    padding: 20px;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+.titlu-container {
+    padding: 20px;
+    align-items:center;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+@media only screen and (max-width: 48em) {
+    .contentMateriale {
+        padding: 10px;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+}
+@media only screen and (max-width:64em) {
+    .contentMateriale {
+        padding: 15px;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+}

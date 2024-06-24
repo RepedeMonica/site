@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IN&lt;FORM&gt;ATIX</title>
+    <link rel="stylesheet" href="../CSS/load.css">
+    <link rel="stylesheet" href="../CSS/clase_profs.css">
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+
+    <div class="container hidden" id="content-container">
+
+        <div class="container">
+
+            <div class="create-class-button-container">
+                <button class="button" onclick="window.location.href='../profesor/creaza_clasa.html'">Creează o clasă</button>
+                <button class="button" id="afiseaza-clase-button">Afișează clasele mele</button>
+
+                <button class="button" onclick="window.location.href='../profesor/propune_problema.html'">Propune Problemă</button>
+                <button class="button" onclick="window.location.href='../profesor/creaza_tema.html'">Creează Temă</button>
+            </div>
+        </div>
+    </div>
+
+<div id="clase-container" class="container1"></div>
+
+<script>
+     document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('overlay');
+            const spinner = document.getElementById('loading-spinner');
+
+            function showContent() {
+                document.getElementById('header').classList.remove('hidden');
+                document.getElementById('content-container').classList.remove('hidden');
+                overlay.style.display = 'none';
+            }
+
+            function fetchHeader() {
+                return fetch('../templates/header.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header').innerHTML = data;
+                    })
+                    .catch(error => console.error('Eroare la încărcarea header-ului:', error));
+            }
+            
+        Promise.all([fetchHeader()]).then(showContent);
+        });
+
+        document.getElementById('afiseaza-clase-button').addEventListener('click', function() {
+         fetch('clase_prof.php?action=fetch_classes')
+        .then(response => response.json())
+        .then(clase => {
+            var claseContainer = document.getElementById('clase-container');
+            claseContainer.innerHTML = '';
+
+            if (clase.length > 0) {
+                clase.forEach(function(clasa) {
+                    var clasaDiv = document.createElement('div');
+                    clasaDiv.className = 'clasa';
+                    clasaDiv.innerHTML = '<h3>' + clasa.nume_clasa + '</h3>' +
+                                         '<a href="../profesor/model_clasa.html?nume_clasa=' + encodeURIComponent(clasa.nume_clasa) + '&profil=' + encodeURIComponent(clasa.profil) + '">Detalii clasă</a>';
+                    claseContainer.appendChild(clasaDiv);
+                });
+            } else {
+                claseContainer.innerHTML = '<p>Nu aveți clase create.</p>';
+            }
+        });
+});
+</script>

@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IN&lt;FORM&gt;ATIX</title>
+    <link rel="stylesheet" href="../CSS/load.css">
+</head>
+<body>
+
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+
+    <div class="content2 hidden" id="content-container">
+        <h2 id="welcome-message">Bine ai venit!</h2>
+        <p>Pentru a vedea mai în detaliu facilitățile oferite puteți accesa:
+            <a href="../scholary/scholary.html">Scholary</a></p>
+        
+        <br>În cazul în care te afli pentru prima dată pe această platformă de exersare și aprofundare a problemelor din domeniul informaticii, uite cele mai importante lucruri pe care trebuie să le știi:
+        <br>- scopul nostru este să ajutăm cât mai mulți tineri să abordeze domeniul informaticii și poate să-și găsească o nouă pasiune
+        <br>- platforma noastră este gândită pentru orice tip de elev indiferent de nivelul său de cunoștințe
+        <br>- urmează să adăugăm probleme într-un ritm constant la un interval de 2 săptămâni
+        <br>- dacă ești profesor și dorești să-ți îndrumi clasa pe platforma noastră îți poți face un cont de profesor
+        <br>- de asemenea ca și cadru didactic dispui de posibilitatea de a crea teme sau propune probleme pentru clasa ta
+        <br>- pagina noastră include diferite materiale bibliografice menite să vină în ajutorul elevilor atât scrise de noi cât și din surse sigure
+        <br>- ne bucurăm că ai ales să începi un parteneriat cu noi și în semn de bine ai venit te invităm să citești glumele de mai jos
+        
+        <h3>Ai avut o zi proastă? Uite ceva care să te înveselească!</h3>
+        <ul>
+            <li>
+                <p>Întrebare: Care este diferența dintre un programator amator și unul profesionist?
+                    <br>Răspuns: Cel amator crede că un kilobyte are 1.000 de bytes, iar cel profesionist crede că un kilometru are 1.024 de metri.</p>
+            </li>
+            <li>
+                <p>Calculatorul îi spune proprietarului: „Stăpâne, am avut un coșmar!”;
+                    <br>Proprietarul: „Termină cu prostiile, tu nu visezi!”;
+                    <br>Calculatorul: „Ba da, stăpâne. Dormeam, visam 0 1 0 1 1 1 0 și, dintr-o dată, 2;
+                </p>
+            </li>
+            <li>Definiția programatorului: <br>Cineva care rezolvă o problemă pe care nu știai că o ai într-un fel pe care nu-l înțelegi.</li>
+            <li><p>Project manager-ul este acela care crede că nouă femei pot face un copil într-o singură lună.</p></li>
+        </ul>
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('overlay');
+            const spinner = document.getElementById('loading-spinner');
+    
+            function showContent() {
+                document.getElementById('header').classList.remove('hidden');
+                document.getElementById('content-container').classList.remove('hidden');
+                overlay.style.display = 'none';
+            }
+    
+            function fetchHeader() {
+                return fetch('../templates/header.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header').innerHTML = data;
+                    })
+                    .catch(error => console.error('Eroare la încărcarea header-ului:', error));
+            }
+    
+            function fetchData() {
+                return fetch('index.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            window.location.href = "../home.html";
+                        } else {
+                            document.title = data.title + ' - IN<FORM>ATIX';
+                            document.getElementById('welcome-message').textContent = 'Bine ai venit, ' + data.username + '!';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Eroare la încărcarea datelor:', error);
+                        window.location.href = "../home.html";
+                    });
+            }
+    
+            Promise.all([fetchHeader(), fetchData()]).then(showContent);
+        });
+        </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IN&lt;FORM&gt;ATIX</title>
+    <link rel="stylesheet" href="../CSS/load.css">
+    <link rel="stylesheet" href="../CSS/profi.css">
+</head>
+<body>
+    <div class="overlay" id="overlay">
+        <div class="loading-spinner" id="loading-spinner"></div>
+    </div>
+
+    <div id="header" class="hidden"></div>
+
+    <div class="contain hidden" id="cont-container">
+    <div class="profill">
+        <div class="leftt">
+            <h2>Detalii personale</h2>
+            <p>Nume: <span id="user-name"></span></p>
+            <p>ID Utilizator: <span id="user-id"></span></p>
+            <p>Email: <span id="user-email"></span></p>
+            <p id="class-section">Clasă: <span id="user-class"></span></p>
+            <p>Media soluțiilor mele: <span id="user-average-grade"></span></p>
+        </div>
+        <div class="optionss">
+            <div class="rightt">
+                <h2>Opțiuni</h2>
+                <p>Număr de probleme incercate: <span id="numar-probleme-rezolvate">0</span></p>
+                <p>Număr de soluții trimise: <span id="numar-probleme-incepute">0</span></p>
+                <p>Număr de soluții corecte: <span id="numar-probleme-corecte">0</span></p>
+                <div class="category">
+                    <p tabindex="0">Probleme rezolvate</p>
+                    <ul class="category-list" id="probleme-rezolvate"></ul>
+                </div>
+                <div class="category">
+                    <p tabindex="0">Sugestie problemă </p>
+                    <ul class="category-list" id="problema-random"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('overlay');
+            const spinner = document.getElementById('loading-spinner');
+
+            function showContent() {
+                document.getElementById('header').classList.remove('hidden');
+                document.getElementById('cont-container').classList.remove('hidden');
+                overlay.style.display = 'none';
+            }
+
+            function fetchHeader() {
+                return fetch('../templates/header.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('header').innerHTML = data;
+                    })
+                    .catch(error => console.error('Eroare la încărcarea header-ului:', error));
+            }
+
+            function fetchAll(){
+            return fetch('profil.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        window.location.href = "../home.html";
+
+                    } 
+                    else {
+                        document.getElementById('user-name').textContent = data.user.nume + ' ' + data.user.prenume;
+                        document.getElementById('user-id').textContent = data.user.id;
+                        document.getElementById('user-email').textContent = data.user.email;
+                     
+                        if (data.user.tip_utilizator !== 'profesor' && data.user.clasa) {
+                                document.getElementById('user-class').textContent = data.user.clasa;
+                            } else {
+                                document.getElementById('class-section').style.display = 'none';
+                            }
+                        document.getElementById('numar-probleme-rezolvate').textContent = data.probleme_rezolvate.length;
+                        document.getElementById('numar-probleme-incepute').textContent = data.numar_probleme_incepute;
+                        document.getElementById('numar-probleme-corecte').textContent = data.numar_probleme_corecte;
+
+                        document.getElementById('user-class').textContent = data.user.clasa;
+
+                    // Fetch and display the average grade
+                    fetch('../probleme/average_grade.php')
+                    .then(response => response.json())
+                                .then(averageData => {
+                                    if (averageData.error) {
+                                        document.getElementById('user-average-grade').textContent = 'N/A';
+                                    } else {
+                                        document.getElementById('user-average-grade').textContent = parseFloat(averageData.media_solutii).toFixed(2);
+                                    }
+                                })
+                                .catch(error => console.error('Eroare la încărcarea mediei:', error));
+
+
+                        const problemeRezolvateList = document.getElementById('probleme-rezolvate');
+                        data.probleme_rezolvate.forEach(problema => {
+                            const listItem = document.createElement('li');
+                            const link = document.createElement('a');
+                            link.href = `../probleme/problema.html?id=${encodeURIComponent(problema.id)}`;
+                            link.textContent = problema.titlu;
+                            listItem.appendChild(link);
+                            problemeRezolvateList.appendChild(listItem);
+                        });
+
+                        const problemaRandomList = document.getElementById('problema-random');
+                        if (data.problema_random) {
+                            const listItem = document.createElement('li');
+                            const link = document.createElement('a');
+                            link.href = `../probleme/problema.html?id=${encodeURIComponent(data.problema_random.id)}`;
+                            link.textContent = data.problema_random.titlu;
+                            listItem.appendChild(link);
+                            problemaRandomList.appendChild(listItem);
+                        } else {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = 'Nu există probleme neîncercate disponibile.';
+                            problemaRandomList.appendChild(listItem);
+                        }
+                    }
+                })
+                .catch(error => {
+                        console.error('Eroare la încărcarea datelor:', error);
+                        window.location.href = "../home.html";
+                    });            }
+
+            Promise.all([fetchHeader(), fetchAll()]).then(showContent);
+        });
+    </script>
+</body>
+</html>

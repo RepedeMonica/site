@@ -1,0 +1,194 @@
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background-image: url('../CSS/fundal.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.75); 
+    z-index: -1;
+}
+
+.container-rotativ {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s;
+}
+
+.container-rotativ:hover img {
+    transform: rotate(360deg);
+}
+
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 100px;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    max-width: 1200px;
+}
+
+.reguli {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 20px; 
+    width: 250px;
+}
+
+.reguli h3 {
+    margin-top: 0;
+    font-size: 16px;
+}
+
+.reguli ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reguli li {
+    padding: 5px 0;
+    font-size: 14px;
+}
+
+form {
+    background-color: rgba(206, 220, 220, 0.641);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+.centrare{
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.button {
+    background-color: rgba(50, 177, 160, 0.7);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: rgba(50, 177, 160, 1);
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+input[type="text"][readonly] {
+    background-color: #f0f0f0;
+}
+#taguri-select-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+#taguri-select-container button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+#taguri-select-container button.selected {
+    background-color: #32B1A0;
+    color: white;
+    border-color: #32B1A0;
+}
+.column{
+    flex-direction: column;
+}
+@media only screen and (max-width: 48em) {
+    .container-rotativ {
+        width: 40%;
+        height: auto;
+    }
+    .container {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+    }
+
+    .reguli {
+        margin-left: 0;
+        margin-top: 20px;
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media only screen and (max-width: 40em) {
+  
+    .container-rotativ {
+        width: 40%;
+        height: auto;
+        
+    }
+    form {
+        width: 90%;
+        max-width: 400px;
+    }
+.container{
+    word-wrap: break-word;
+    word-break: break-word;
+}
+    .button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .reguli {
+        width: 100%;
+        max-width: 100%;
+        
+    }
+}
