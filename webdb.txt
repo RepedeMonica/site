@@ -1,0 +1,184 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    nume VARCHAR(50) NOT NULL,
+    prenume VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    telefon VARCHAR(20),
+    tara VARCHAR(50),
+    oras VARCHAR(50),
+    liceu VARCHAR(100),
+    clasa VARCHAR(20), 
+    tip_utilizator VARCHAR(20)
+);
+CREATE TABLE probleme (
+    id integer PRIMARY KEY,
+    titlu VARCHAR(100) NOT NULL,
+    tag VARCHAR(50) NOT NULL,
+    categorie VARCHAR(50) NOT NULL,
+    enunt TEXT NOT NULL
+);
+
+
+CREATE TABLE comentarii (
+    id SERIAL PRIMARY KEY,
+    id_problema INT REFERENCES probleme(id) ON DELETE CASCADE,
+    comentariu TEXT NOT NULL
+);
+
+
+CREATE TABLE clase_prof (
+    id SERIAL PRIMARY KEY,
+    nume_clasa TEXT NOT NULL,
+    profil TEXT NOT NULL,
+    id_prof INT REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE (nume_clasa,id_prof)
+);
+
+CREATE TABLE clasa_elevi (
+    id SERIAL PRIMARY KEY,
+    nume_clasa TEXT NOT NULL,
+    id_prof INT NOT NULL,
+    id_elev INT REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (nume_clasa, id_prof) REFERENCES clase_prof(nume_clasa, id_prof) ON DELETE CASCADE,
+    UNIQUE (nume_clasa, id_elev) 
+);
+
+
+////
+CREATE TABLE probleme_propuse (
+    id SERIAL PRIMARY KEY,
+    titlu VARCHAR(100) NOT NULL,
+    tag VARCHAR(50) NOT NULL,
+    categorie VARCHAR(50) NOT NULL,
+    enunt TEXT NOT NULL
+);
+
+CREATE TABLE teme (
+    id SERIAL PRIMARY KEY,
+    nume_clasa VARCHAR(100) NOT NULL,
+    id_prof INT NOT NULL,
+    data_limita DATE,
+    FOREIGN KEY (nume_clasa, id_prof) REFERENCES clase_prof(nume_clasa, id_prof) ON DELETE CASCADE
+);
+
+CREATE TABLE probleme_tema (
+    id SERIAL PRIMARY KEY,
+    id_tema INT NOT NULL,
+    id_problema INT ,
+    nume_problema VARCHAR(100),
+    enunt TEXT,
+    FOREIGN KEY (id_problema) REFERENCES probleme(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE solutii_propuse (
+    id SERIAL PRIMARY KEY,
+    id_elev INT REFERENCES users(id) ON DELETE CASCADE,
+    id_problema INT REFERENCES probleme_tema(id) ON DELETE CASCADE,
+    solutie TEXT NOT NULL,
+    data_trimis TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE ratings (
+    id SERIAL PRIMARY KEY,
+    id_elev INT REFERENCES users(id),
+    id_problema INT REFERENCES probleme(id),
+    rating INT CHECK (rating BETWEEN 0 AND 5),
+    UNIQUE (id_elev, id_problema)
+);
+
+CREATE TABLE solutii (
+    id SERIAL PRIMARY KEY,
+    id_elev INT REFERENCES users(id) ON DELETE CASCADE,
+    id_problema INT REFERENCES probleme(id) ON DELETE CASCADE,
+    solutie TEXT NOT NULL,
+    data_trimis TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+///
+CREATE TABLE note (
+    id SERIAL PRIMARY KEY,
+    id_prof INT REFERENCES users(id) ON DELETE CASCADE,
+    id_solutie INT REFERENCES solutii(id) ON DELETE CASCADE,
+    nota INT CHECK (nota BETWEEN 1 AND 10),
+    data_notare TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (id_solutie)
+);
+
+CREATE TABLE observatii (
+    id SERIAL PRIMARY KEY,
+    id_prof INT REFERENCES users(id) ON DELETE CASCADE,
+    id_solutie INT REFERENCES solutii(id) ON DELETE CASCADE,
+    enunt TEXT NOT NULL,
+    data_notare TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (id_solutie)
+);
+
+CREATE TABLE tema_probleme_propuse(
+    id SERIAL PRIMARY KEY,
+    id_prof INT REFERENCES users(id) ON DELETE CASCADE,
+    nume_problema VARCHAR(100) NOT NULL,
+    enunt TEXT NOT NULL,
+    nume_clasa VARCHAR(100) NOT NULL,
+    data_limita DATE,
+    FOREIGN KEY (nume_clasa, id_prof) REFERENCES clase_prof(nume_clasa, id_prof) ON DELETE CASCADE
+);
+
+CREATE TABLE observatii_propuse (
+    id SERIAL PRIMARY KEY,
+    id_prof INT REFERENCES users(id) ON DELETE CASCADE,
+    id_solutie INT REFERENCES solutii_propuse(id) ON DELETE CASCADE,
+    enunt TEXT NOT NULL,
+    data_notare TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (id_solutie)
+);
+
+
+-- Eliminarea constrângerii existente
+ALTER TABLE clase_prof DROP CONSTRAINT IF EXISTS clase_prof_nume_clasa_id_prof_key CASCADE;
+
+-- Adăugarea noii constrângeri care include și profilul
+ALTER TABLE clase_prof ADD CONSTRAINT clase_prof_nume_clasa_id_prof_key UNIQUE (nume_clasa, id_prof);
+
+Sa se scrie un program care citeste de la tastatura un numar natural n si apoi un sir de n numere naturale si determina media aritmetica a celor pare.
+
+INSERT INTO users (username, password, nume, prenume, email, telefon, tara, oras, liceu, clasa, tip_utilizator) 
+VALUES 
+    ('om1', '123', 'Nume1', 'Prenume1', 'exemplu1@example.com', '123456789', 'Romania', 'Bucuresti', 'Colegiul National', 'XII-A', 'elev'),
+    ('om2', '123', 'Nume2', 'Prenume2', 'exemplu2@example.com', '987654321', 'Romania', 'Cluj-Napoca', 'Liceul Teoretic', 'XI-B', 'elev'),
+    ('prof1', '123', 'NumeProfesor', 'PrenumeProfesor', 'profesor@example.com', '555123456', 'Romania', 'Iasi', 'Colegiul Pedagogic', 'XII-C', 'profesor');
+////////////////
+
+
+
+INSERT INTO users (username, password, nume, prenume, email, telefon, tara, oras, liceu, clasa, tip_utilizator) 
+VALUES ('admin', '123', 'Nume1', 'Prenume1', 'exemplu1@example.com', '123456789', 'Romania', 'Bucuresti', 'Colegiul National', 'XII-A', 'admin');
+
+
+INSERT INTO users (username, password, nume, prenume, email, telefon, tara, oras, liceu, clasa, tip_utilizator) 
+VALUES 
+    ('AndreiM', '123', 'Murgulet', 'Andrei', 'andreim@gmail.com', '0743246579', 'Romania', 'Iasi', 'Colegiul National Emil Racovita', '12', 'elev'),
+    ('MonicaR', '123', 'Repede', 'Monica', 'monicar@gmail.com', '079876541', 'Romania', 'Iasi', 'Colegiul National Emil Racovita', '12', 'elev'),
+    ('IonPop', '123', 'Popescu', 'Ion', 'ionpop@gmail.com', '0732123456', 'Romania', 'Bucuresti', 'Colegiul National Emil Racovita', '12', 'elev'),
+    ('AnaS', '123', 'Stan', 'Ana', 'anas@gmail.com', '0723456789', 'Romania', 'Cluj', 'Colegiul National Emil Racovita', '12', 'elev'),
+    ('VladM', '123', 'Mihai', 'Vlad', 'vladm@gmail.com', '0712345678', 'Romania', 'Timisoara', 'Colegiul National Emil Racovita', '12', 'elev'),
+    ('ElenaG', '123', 'Georgescu', 'Elena', 'elenag@gmail.com', '0745678910', 'Romania', 'Constanta', 'Liceul Teoretic Miron Costin', '11', 'elev'),
+    ('CristiD', '123', 'Dumitru', 'Cristi', 'cristid@gmail.com', '0756789123', 'Romania', 'Iasi', 'Liceul Teoretic Miron Costin', '11', 'elev'),
+    ('MariaP', '123', 'Popa', 'Maria', 'mariap@gmail.com', '0767891234', 'Romania', 'Brasov', 'Liceul Teoretic Miron Costin', '11', 'elev'),
+    ('DanC', '123', 'Constantin', 'Dan', 'danc@gmail.com', '0789123456', 'Romania', 'Sibiu', 'Liceul Teoretic Miron Costin', '11', 'elev'),
+    ('LauraT', '123', 'Tudor', 'Laura', 'laurat@gmail.com', '0791234567', 'Romania', 'Oradea', 'Liceul Teoretic Miron Costin', '11', 'elev');
+
+INSERT INTO users (username, password, nume, prenume, email, telefon, tara, oras, liceu, clasa, tip_utilizator) 
+VALUES 
+    ('MihaiM', '123', 'Morar', 'Mihai', 'profesormorar@hotmail.com', '0743245479', 'Romania', 'Iasi', 'Colegiul National Emil Racovita','', 'profesor'),
+     ('AdrianMarin', '123', 'Marin', 'Adrian', 'marinadrian@hotmail.com', '0743245179', 'Romania', 'Iasi', 'Liceul Teoretic Miron Costin','', 'profesor');
+
+CREATE TABLE note_propuse (
+    id SERIAL PRIMARY KEY,
+    id_prof INT REFERENCES users(id) ON DELETE CASCADE,
+    id_solutie INT REFERENCES solutii_propuse(id) ON DELETE CASCADE,
+    nota INT CHECK (nota BETWEEN 1 AND 10),
+    data_notare TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (id_solutie)
+);

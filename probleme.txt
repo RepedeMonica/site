@@ -1,0 +1,173 @@
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00001,'suma a doua numere', 'medie', 'Algoritmi Elementari', 'Calculati suma a doua numere.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00002,'produs a doua numere', 'medie', 'Algoritmi Elementari', 'Calculati produsul a doua numere.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00003,'produs a trei numere', 'medie', 'Structuri de date liniare', 'Calculati produsul a trei numere.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00004,'Permutari', 'usoara', 'Backtracking', 'Se citeste un numar natural nenul n. Sa se afiseze, in ordine lexicografica, permutarile multimii {1,2,..,n}.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00005,'Permutari1', 'usoara', 'Backtracking', 'Se citeste un numar natural nenul n. Sa se afiseze, in ordine invers lexicografica, permutarile multimii {1,2,..,n}.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00006,'Permutari2', 'medie', 'Backtracking', 'Se citeste un numar natural nenul n, apoi n numere naturale distincte. Sa se afiseze, in ordine lexicografica, permutarile multimii formate din cele n numere citite.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00007,'SirPrim', 'medie', 'Backtracking', 'Se citeste un numar natural nenul n, apoi n numere naturale distincte. Sa se afiseze, in ordine invers lexicografica, sirurile din cele n valori cu proprietatea ca oricare 2 valori invecinate sunt prime intre ele.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00008,'Perm', 'medie', 'Backtracking', 'Fie multimea M={1,2,..,n} si P(1),P(2),...,P(n) o permutare a ei. Elementul x din M se numeste punct fix daca P(x)=x. Se citeste un numar natural nenul n. Sa se afiseze, in ordine lexicografica, permutarile fara puncte fixe ale multimii {1,2,..,n}.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00009,'Hercule', 'medie', 'Backtracking', 'Hercule trebuie sa strabata un labirint cu capcane reprezentat de o matrice cu n linii si m coloane. Pentru fiecare celula a labirintului, se cunoaste timpul exprimat in minute dupa care celula respectiva devine capcana. Dupa ce o celula devine capcana, Hercule piere daca intra in acea celula. Initial Hercule se afla in celula de coordonate (1, 1) si trebuie sa ajunga in celula de cordonate (n,m). Sa se afiseze numarul total de drumuri pe care le poate urma Hercule prin labirint, astfel incat Hercule sa nu piara. Se citesc de pe prima linie numerele n si m si de pe urmatoarele n linii cate m valori naturale.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00010,'Sudoku', 'medie', 'Backtracking', 'Scrieti un program care, pentru o matrice 9 x 9 data, reprezentand un puzzle SUDOKU, determina o solutie a unui astfel de puzzle, dupa regulile deja stiute. Ca date de intrare se citeste o matrice 9 x 9 (cate 9 elemente pe cate o linie, fiecare element fiind separat printr-un spatiu), reprezentand un puzzle SUDOKU, in care pozitiile necompletate au valoarea 0.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00011,'Aranjamente', 'usoara', 'Backtracking', 'Se citesc 2 numere naturale nenule n si k. Sa se afiseze, in ordine lexicografica, aranjamentele de cate k elemente ale multimii {1,2,..,n}.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00012,'Numere124', 'usoara', 'Backtracking', 'Se citesc un numar natural n avand cifrele diferite doua cate doua si o cifra c. Afisati in ordine crescatoare numerele formate din c cifre distincte care se pot obtine din cifrele lui n.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00013,'Combinari', 'usoara', 'Backtracking', 'Se citesc 2 numere naturale nenule n si k. Sa se afiseze, in ordine lexicografica, submultimile de cate k elemente ale multimii {1,2,..,n}.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00014,'NiceNumbers', 'usoara', 'Algoritmi Elementari', 'Un numar se numeste “nice” daca contine 69 ca subsecventa. In alte cuvinte, daca in numarul respectiv, imediat dupa o cifra 6 se afla o cifra 9, numarul respectiv este “nice”. De exemplu, numarul 369420 este “nice”, pe cand numarul 684920 nu este “nice”. Se dau N numere naturale. Sa se determine cate dintre ele sunt “nice”.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00015,'Cifrak', 'usoara', 'Algoritmi Elementari', 'Se considera n numere si o cifra nenula k. Sa se calculeze suma cifrelor numerelor dintre cele n citite care incep cu cifra k.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00016,'CifBin', 'usoara', 'Algoritmi Elementari', 'Se citeste un numar natural n. Sa se determine cate cifre 0 si cate cifre 1 are reprezentarea in baza 2 a acestui numar.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00017,'Suma Cifrelor', 'usoara', 'Algoritmi Elementari', 'Sa se scrie un program care sa determine suma cifrelor unui numar natural citit de la tastatura.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00018,'rotire25', 'grea', 'Algoritmi Elementari', 'Dandu-se numerele X si K determinati: 1. Produsul dintre ultima cifra a numarului X * X * X * … * X (de K ori) si prima cifra a lui X. 2. Numarul rezultat dupa aplicarea celor K transformari.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00019,'Combinari', 'usoara', 'Algoritmi Elementari', 'Se citesc 2 numere naturale nenule n si k. Sa se afiseze, in ordine lexicografica, submultimile de cate k elemente ale multimii {1,2,..,n}.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00020,'UnuPatru', 'grea', 'Algoritmi Elementari', 'Fiind dat un numar natural, efectuand suma patratelor cifrelor numarului dat, apoi repetand insumarea patratelor cifrelor pentru numerele obtinute ca rezultat, la un moment dat se obtine una dintre valorile 1 sau 4. Dat un set de numere naturale, sa se determine pentru fiecare dintre ele, numarul de repetari ale calculului sumei patratelor cifrelor pana la obtinerea rezultatului 1 sau 4.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00021,'Ordonare', 'usoara', 'Vectori', 'Sa se scrie un program care ordoneaza crescator elementele unui vector.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00022,'Interclasare', 'usoara', 'Vectori', 'Se dau doua siruri a si b, cu n, respectiv m elemente, numere naturale, ordonate crescator. Sa se construiasca un al treilea sir, c, care sa contina, in ordine crescatoare, elementele din sirurile a si b.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00023,'Stergere_Element', 'usoara', 'Vectori', 'Sa se stearga dintr-un sir elementul aflat pe o pozitie data.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00024,'InterclasM', 'usoara', 'Vectori', 'Se da un numar natural x si doua siruri a si b, cu n, respectiv m elemente, numere naturale, ordonate strict crescator. Sa se afiseze, in ordine crescatoare, multiplii lui x care se afla doar in unul dintre cele doua siruri.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00025,'kSecventa1', 'usoara', 'Vectori', 'Se da un vector cu n elemente, numere naturale, si un numar k. Sa se stabileasca daca in vector exista doua secvente de lungime k identice.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00026,'PermCirc', 'medie', 'Vectori', 'Determinati toate permutarile circulare spre stanga ale unui vector dat.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00027,'RobinHood', 'grea', 'Vectori', 'Robin Hood si Little John au hotarat sa stabileasca care dintre ei este cel mai bun arcas. Pentru aceasta au construit n tinte asezate in linie dreapta si numerotate de la 1 la n. Au stabilit apoi distanta de tragere. Cei doi se deplaseaza prin fata tintelor in linie dreapta la distanta stabilita de comun acord. Cei doi pot trage simultan in aceeasi tinta sau intr-una deja atinsa. Concursul se incheie in momentul in care fiecare tinta a fost atinsa cel putin o data. 1. Se cere sa se determine timpul in care se termina concursul. 2. Care sunt tintele atinse exact o data in timpul concursului. 3. Care sunt tintele atinse de cele mai multe ori in timpul concursului.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00028,'puzzle1', 'grea', 'Vectori', 'Maria a primit cadou de ziua ei o cutie cu piese de puzzle, etichetate cu numere naturale. Pentru a-l rezolva trebuie sa lipeasca intre ele, in ordinea in care le extrage din cutie, cat mai multe piese, formand astfel grupuri de piese. Cunoscand cele N numere naturale care se gasesc pe etichetele pieselor de joc, in ordinea in care aceste se extrag din cutie, sa se determine: 1. Numarul de grupuri pe care le obtine Maria dupa ce rezolva jocul de puzzle; 2. Cele K numere inscrise pe etichetele grupurilor alese de Maria.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00029,'QuickSort', 'usoara', 'Divide et Impera', 'Se da un sir cu n elemente, numere intregi. Folosind metoda QuickSort, ordonati crescator elementele acestui sir.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00030,'SumVec', 'usoara', 'Divide et Impera', 'Se considera un sir cu n elemente, numere naturale. Folosind metoda Divide et Impera, determinati suma elementelor acestui sir.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00031,'MergeSort', 'usoara', 'Divide et Impera', 'Se da un sir cu n elemente, numere intregi. Folosind metoda MergeSort, ordonati crescator elementele acestui sir.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00032,'ExistaImpareDivImp', 'usoara', 'Divide et Impera', 'Se da un sir cu n elemente, numere naturale. Folosind metoda Divide et Impera sa se verifice daca in sir exista elemente impare.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00033,'SumPareVe', 'usoara', 'Divide et Impera', 'Se considera un sir cu n elemente, numere naturale. Folosind metoda Divide et Impera, determinati suma elementelor pare din acest sir.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00034,'Matrice_Div_Et_Imp', 'medie', 'Divide et Impera', 'Pentru o matrice patratica de dimensiune 2n, sa se determine regula de parcurgere pe baza a 3 exemple si sa se aplice.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00035,'Pozitii', 'usoara', 'Siruri de caractere', 'Se da un sir de caractere. Sa se determine cate vocale din sir sunt cuprinse intre doua consoane.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00036,'Vocale', 'usoara', 'Siruri de caractere', 'Sa se scrie un program care citeste un sir de caractere format din litere mici ale alfabetului englez si inlocuieste fiecare vocala cu litera mare corespunzatoare.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00037,'Initiale', 'usoara', 'Siruri de caractere', 'Sa se scrie un program care citeste de la tastatura o propozitie formata din mai multe cuvinte separate prin spatii si transforma prima si ultima litera a fiecarui cuvant in litera mare.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00038,'prosir', 'usoara', 'Siruri de caractere', 'Sa se inlocuiasca cu cifra 5 ultima litera a fiecarui cuvant din textul continut de fisierul prosir.in.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00039,'Trepte2', 'usoara', 'Programare dinamica', 'O persoana are de urcat n trepte. Stiind ca de pe treapta i poate trece pe treapta i + 1, i + 2, ..., i + (k - 1) sau i + k, aflati in cate moduri poate urca cele n trepte. (initial este pe treapta 1)');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00040,'Cladire2', 'usoara', 'Programare dinamica', 'Se considera o cladire de forma dreptunghiulara formata din n*m camere, dispuse pe n linii si m coloane. In fiecare camera se afla o cantitate cunoscuta de bomboane. Intrarea in cladire este in camera de coordonate (1,1), iar iesirea in camera de coordonate (n,m). Din orice camera (i,j) se poate ajunge numai in camerele (i+1,j) sau (i,j+1), fara a parasi cladirea. Un copil intra in cladire, parcurge un sir de camere dupa regula precizata si iese din cladire, luand din fiecare camera in care intra toate bomboanele existente. Determinati cantitatea maxima de bomboane care poate fi culeasa precum si un traseu prin cladire in care se aduna cantitatea maxima de bomboane.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (000141,'dinamica06', 'usoara', 'Programare dinamica', 'Se da un numar natural nenul n. Sa se determine numarul de numere de n cifre din multimea {1, 2, 3, 4} care nu au doua cifre alaturate egale si care au proprietatea ca sunt divizibile cu 2. Pentru ca acest numar poate fi foarte mare, se va calcula modulo 123457.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00042,'dinamica07', 'medie', 'Programare dinamica', 'Se dau numerele naturale n, p si q. Sa se determine numarul sirurilor de n biti in care numarul bitilor de 1 este cuprins intre p si q.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00043,'seqstr', 'grea', 'Programare dinamica', 'Se dau doua siruri, A si B, cu valori din multimea {0, 1}. 1. Sa se afle numarul de subsecvente distincte din B care sunt subsiruri in A. 2. Sa se afle, pentru o subsecventa B[p...q], numarul de subsiruri din A egale cu aceasta. 3. Sa se afle numarul de subsiruri din A care sunt subsecvente in B.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00044,'Stiva', 'usoara', 'Structuri de date liniare', 'Sa se scrie un program care gestioneaza o stiva de numere intregi. Initial stiva este vida. Programul va citi de la tastatura o lista de operatii, care pot fi: push X – adauga valoarea intreaga X pe stiva; pop – elimina elementul din varful stivei; top – afiseaza elementul din varful stivei. Programul va realiza asupra stivei operatiile citite, in ordine. Afisarile se fac pe ecran, cate o valoare pe linie.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00045,'Coada', 'usoara', 'Structuri de date liniare', 'Sa se scrie un program care gestioneaza o coada de numere intregi. Initial coada este vida. Programul va citi de la tastatura o lista de operatii, care pot fi: push X – adauga valoarea intreaga X in coada; pop – elimina elementul din coada; front – afiseaza elementul de la inceputul cozii. Programul va realiza asupra cozii operatiile citite, in ordine. Afisarile se fac pe ecran, cate o valoare pe linie.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00046,'Cuburi', 'usoara', 'Structuri de date liniare', 'Gigel are un set de n cuburi. Fiecare cub este marcat cu un numar natural, de la 1 la n si i se cunoaste lungimea laturii – numar natural. Cu o parte dintre aceste cuburi Gigel va construi o stiva, astfel: fiecare cub se analizeaza o singura data, in ordinea numerelor marcate; daca stiva nu contine niciun cub, cubul curent devine baza stivei daca cubul curent are latura mai mica sau egala cu cubul din varful stive, se adauga pe stiva; daca cubul curent are latura mai mare decat cubul din varful stivei, se vor inlatura de pe stiva cuburi (eventual toate) pana cand cubul curent are latura mai mica sau egala cu cubul din varful stivei. Sa se afiseze numerele de pe cuburile existente la final in stiva, de la baza spre varf.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00047,'Roboti', 'usoara', 'Structuri de date liniare', 'Se da o matrice cu n linii si m coloane si elemente 0 sau 1, reprezentand planul unui teren in care 0 reprezinta o zona accesibila, iar 1 reprezinta o zona inaccesibila. O zona a terenului are ca si coordonate linia si coloana corespunzatoare din matrice. Intr-o zona cunoscuta a matricei se afla un robot, iar in alta zona, e asemenea cunoscuta, se afla o robotica. Determinati numarul minim de pasi prin care robotul va ajunge la robotica. Daca nu este posibil ca robotul sa ajunga la robotica, rezultatul va fi -1.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00048,'minlex', 'medie', 'Structuri de date liniare', 'Se considera un cuvant format numai din litere mici si un numar natural nenul K. Sa se determine cuvantul minim lexicografic obtinut prin eliminarea a exact K litere din cuvantul initial.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00049,'PutereBiti', 'usoara', 'Operatii pe biti', 'Se da un numar n. Afiati rezultatul operatiei 2n.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00050,'VerifParitate', 'usoara', 'Operatii pe biti', 'Se citesc n numere naturale. Determinati pentru fiecare dintre ele daca este par sau impar.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00051,'getBit', 'usoara', 'Operatii pe biti', 'Se dau mai multe perechi de forma numar, bit. Afiati pentru fiecare pereche valoarea bitului corespunzator din reprezentarea interna pe 64 de biti a numarului dat.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00052,'setbit0', 'usoara', 'Operatii pe biti', 'Se dau: n un numar intreg si b un numar natural. Setati la 0 bitul b al lui n.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00053,'FrecvImp', 'usoara', 'Operatii pe biti', 'Se da un sir format din n numere naturale. Toate valorile putere a lui 2 din acest sir au frecventa para, cu o singura exceptie. Determinati aceasta valoare – putere a lui 2 cu frecventa impara.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00054,'Cautare binara', 'usoara', 'Cautare binara', 'Se da un vector x cu n elemente numere naturale, ordonate crescator, si un vector y cu m elemente, de asemenea numere naturale. Verificati pentru fiecare element al vectorului y daca apare in x.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00055,'clase', 'medie', 'Cautare binara', 'Intr-o scoala sunt n clase, fiecare avand un numar diferit de elevi. Scoala primeste m pachete cu carti, fiecare cu un numar diferit de carti. Pentru ca o clasa sa primeasca un pachet, numarul elevilor din acea clasa trebuie sa fie egal cu numarul cartilor din pachet. Sa se determine cate clase primesc un pachet de carti.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00056,'cb', 'usoara', 'Cautare binara', 'Se considera un sir a[1], a[2], …, a[n] de numere naturale. Se dau si T intervale inchise de forma [x, y], cu x ≤ y. Pentru fiecare din cele T intervale de forma [x, y] trebuie sa raspundeti la intrebarea: cate numere din sir apartin intervalului [x, y]?');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00057,'cb2', 'medie', 'Cautare binara', 'Se considera un sir de numere naturale nenule a[1], a[2], …, a[n]. Asupra sirului se efectueaza Q interogari. Fiecare interogare este data de o pereche (x, s): care este indicele maxim p cu proprietatea ca a[i] ≤ x, pentru orice i=1..p si in plus a[1] + a[2] + ... + a[p] <= s? Trebuie sa raspundeti la fiecare din cele Q intrebari.');
+
+INSERT INTO probleme (id, titlu, tag, categorie, enunt)
+VALUES (00058,'prosum', 'grea', 'Cautare binara', 'Se dau N numere naturale a[1], a[2], ..., a[N] si un numar natural nenul M. Sa se determine numarul perechilor de indici (i, j), cu i < j, cu proprietatea ca numarul a[i]*a[j]+a[i]+a[j] este divizibil cu M.');
